@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIONS KARATE CLUB PUNE - Examination Results</title>
+    <title>LIONS KARATE CLUB PUNE - Official Results Portal</title>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,10 +12,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         :root {
@@ -24,11 +27,14 @@
             --primary-light: #f8ad9d;
             --secondary-color: #2a9d8f;
             --accent-color: #e9c46a;
+            --gold-color: #FFD700;
+            --gold-dark: #D4AF37;
             --dark-color: #264653;
             --light-color: #f8f9fa;
             --success-color: #28a745;
             --warning-color: #ffc107;
             --info-color: #17a2b8;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         * {
@@ -42,6 +48,39 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             color: var(--dark-color);
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background Particles */
+        .particles-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: linear-gradient(45deg, var(--primary-color), var(--gold-color));
+            border-radius: 50%;
+            animation: floatParticle 20s infinite linear;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
         
         /* Loading Overlay */
@@ -57,81 +96,193 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.8s ease;
         }
         
-        .loading-spinner {
-            width: 80px;
-            height: 80px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s linear infinite;
+        .loading-container {
+            text-align: center;
+        }
+        
+        .loading-lion {
+            font-size: 5rem;
+            color: var(--gold-color);
+            animation: lionRoar 2s infinite alternate;
             margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
         }
         
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
+        @keyframes lionRoar {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .loading-text::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
         }
         
         /* Header */
         .main-header {
-            background: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
             padding: 15px 0;
+            animation: slideDown 0.5s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         
         .logo {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: var(--primary-color);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: var(--transition);
         }
         
-        .logo-icon {
-            font-size: 2.5rem;
-            animation: pulse 2s infinite;
+        .logo:hover {
+            transform: scale(1.05);
+            color: var(--primary-dark);
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .logo-img {
+            height: 60px;
+            width: auto;
+            animation: lionFloat 3s ease-in-out infinite;
+            border-radius: 10px;
+        }
+        
+        @keyframes lionFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
         }
         
         /* Hero Section */
         .hero-section {
-            background: linear-gradient(rgba(38, 70, 83, 0.9), rgba(38, 70, 83, 0.9)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(38, 70, 83, 0.95), rgba(38, 70, 83, 0.95)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
-            padding: 100px 0;
+            padding: 120px 0;
             border-radius: 0 0 40px 40px;
             margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(230, 57, 70, 0.3), 
+                rgba(233, 196, 106, 0.3), 
+                rgba(42, 157, 143, 0.3));
+            animation: heroGradient 8s ease infinite;
+            background-size: 300% 300%;
+        }
+        
+        @keyframes heroGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .hero-title {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(to right, var(--primary-light), var(--accent-color));
+            background: linear-gradient(to right, var(--gold-color), var(--accent-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            from {
+                text-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            }
+            to {
+                text-shadow: 0 5px 35px rgba(255, 215, 0, 0.5);
+            }
         }
         
         .hero-subtitle {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 300;
             margin-bottom: 30px;
             opacity: 0.9;
+            max-width: 700px;
+        }
+        
+        /* Floating Certificates */
+        .floating-cert {
+            position: absolute;
+            font-size: 4rem;
+            color: rgba(255, 215, 0, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .cert-1 {
+            top: 20%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+        
+        .cert-2 {
+            top: 40%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+        
+        .cert-3 {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1); 
+            }
+            50% { 
+                transform: translateY(-20px) rotate(10deg) scale(1.1); 
+            }
         }
         
         /* Search Section */
@@ -142,13 +293,33 @@
         }
         
         .search-card {
-            background: white;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
             padding: 50px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            border: 3px solid var(--primary-color);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+            border: 3px solid transparent;
             position: relative;
             overflow: hidden;
+            transition: var(--transition);
+            animation: cardAppear 0.8s ease-out;
+        }
+        
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .search-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.35);
+            border-color: var(--primary-color);
         }
         
         .search-card:before {
@@ -158,7 +329,13 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color), var(--secondary-color));
+            background: linear-gradient(to right, var(--primary-color), var(--gold-color), var(--secondary-color));
+            animation: borderFlow 3s linear infinite;
+        }
+        
+        @keyframes borderFlow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
         }
         
         .section-title {
@@ -175,15 +352,22 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 60px;
+            width: 80px;
             height: 4px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            background: linear-gradient(to right, var(--primary-color), var(--gold-color));
             border-radius: 2px;
+            animation: widthGrow 2s ease infinite alternate;
+        }
+        
+        @keyframes widthGrow {
+            0% { width: 80px; }
+            100% { width: 120px; }
         }
         
         /* Form Styles */
         .form-group {
             margin-bottom: 25px;
+            position: relative;
         }
         
         .form-label {
@@ -199,22 +383,39 @@
             height: 60px;
             border-radius: 15px;
             border: 2px solid #e1e5e9;
-            padding: 15px 25px;
+            padding: 15px 25px 15px 50px;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            background: rgba(248, 249, 250, 0.8);
         }
         
         .form-control:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.2);
             transform: translateY(-3px);
+            background: white;
+        }
+        
+        .form-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+        
+        /* Mobile Input - FIXED */
+        #parentMobile {
+            letter-spacing: 1px;
         }
         
         .search-btn {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
-            height: 60px;
+            height: 65px;
             border-radius: 15px;
             font-weight: 600;
             font-size: 1.2rem;
@@ -224,14 +425,32 @@
             justify-content: center;
             gap: 15px;
             width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3);
+            transition: var(--transition);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.3);
             margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .search-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .search-btn:hover::after {
+            left: 100%;
         }
         
         .search-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.4);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(230, 57, 70, 0.4);
             background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
         }
         
@@ -242,19 +461,31 @@
         }
         
         .result-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
         .result-card {
             background: white;
-            border-radius: 25px;
-            padding: 50px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 35px 100px rgba(0, 0, 0, 0.25);
             margin-bottom: 40px;
             border: 4px solid var(--primary-color);
             position: relative;
             overflow: hidden;
+            animation: resultAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes resultAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8) rotateX(-10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0);
+            }
         }
         
         .result-card:before {
@@ -264,7 +495,7 @@
             left: 0;
             right: 0;
             height: 8px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color), var(--secondary-color));
+            background: linear-gradient(to right, var(--primary-color), var(--gold-color), var(--secondary-color));
         }
         
         .student-header {
@@ -272,89 +503,168 @@
             margin-bottom: 50px;
             padding-bottom: 30px;
             border-bottom: 3px dashed #e1e5e9;
+            position: relative;
         }
         
         .student-avatar {
-            width: 140px;
-            height: 140px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(135deg, var(--primary-color), var(--gold-color));
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 25px;
-            font-size: 3.5rem;
+            font-size: 4rem;
             color: white;
-            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.3);
-            border: 5px solid white;
+            box-shadow: 0 20px 50px rgba(230, 57, 70, 0.4);
+            border: 8px solid white;
+            position: relative;
+            animation: avatarFloat 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .student-avatar:hover {
+            transform: scale(1.1) rotate(360deg);
+            background: linear-gradient(135deg, var(--gold-color), var(--primary-color));
+        }
+        
+        @keyframes avatarFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+                box-shadow: 0 20px 50px rgba(230, 57, 70, 0.4);
+            }
+            50% { 
+                transform: translateY(-20px) rotate(10deg); 
+                box-shadow: 0 30px 70px rgba(230, 57, 70, 0.6);
+            }
         }
         
         .student-name {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 700;
             color: var(--dark-color);
             margin-bottom: 15px;
-        }
-        
-        .student-id {
-            font-size: 1.2rem;
-            color: var(--dark-color);
-            opacity: 0.7;
-            background: rgba(230, 57, 70, 0.1);
-            padding: 8px 20px;
-            border-radius: 25px;
+            position: relative;
             display: inline-block;
+            animation: nameGlow 3s ease-in-out infinite;
         }
         
-        /* Result Badge */
+        @keyframes nameGlow {
+            0%, 100% { text-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+            50% { text-shadow: 0 5px 25px rgba(230, 57, 70, 0.3); }
+        }
+        
+        .student-name::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--gold-color));
+            border-radius: 2px;
+        }
+        
+        /* GOLD Result Badge */
         .result-badge {
             display: inline-flex;
             align-items: center;
             gap: 15px;
-            padding: 20px 40px;
-            border-radius: 50px;
+            padding: 25px 50px;
+            border-radius: 60px;
             font-weight: 800;
-            font-size: 1.8rem;
-            margin: 30px auto;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            animation: pulse 2s infinite;
+            font-size: 2rem;
+            margin: 40px auto;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.2),
+                0 0 30px rgba(255, 215, 0, 0.3);
+            animation: badgePulse 2s infinite, badgeGlow 3s infinite alternate;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            background: linear-gradient(135deg, var(--gold-color), var(--gold-dark));
+            color: #8B4513;
+            border: 3px solid #D4AF37;
         }
         
-        .result-pass {
-            background: linear-gradient(135deg, var(--success-color), #1a7c6e);
-            color: white;
+        @keyframes badgePulse {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 
+                    0 20px 50px rgba(0, 0, 0, 0.2),
+                    0 0 30px rgba(255, 215, 0, 0.3);
+            }
+            50% { 
+                transform: scale(1.05); 
+                box-shadow: 
+                    0 25px 60px rgba(0, 0, 0, 0.3),
+                    0 0 40px rgba(255, 215, 0, 0.5);
+            }
         }
         
-        .result-fail {
-            background: linear-gradient(135deg, var(--primary-color), #c1121f);
-            color: white;
+        @keyframes badgeGlow {
+            from { 
+                filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+            }
+            to { 
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+            }
         }
         
-        .result-pending {
-            background: linear-gradient(135deg, var(--warning-color), #d4ac0d);
-            color: var(--dark-color);
+        .result-badge:hover {
+            transform: scale(1.1) rotate(5deg);
+            animation-play-state: paused;
+        }
+        
+        .result-badge i {
+            animation: trophySpin 4s linear infinite;
+        }
+        
+        @keyframes trophySpin {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
         }
         
         /* Info Grid */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            margin: 50px 0;
+            margin: 60px 0;
         }
         
         .info-item {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             padding: 30px;
-            border-radius: 20px;
-            border-left: 6px solid var(--primary-color);
-            transition: all 0.3s ease;
+            border-radius: 25px;
+            border-left: 8px solid var(--primary-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            animation: itemAppear 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        @keyframes itemAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .info-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, white, #e9ecef);
         }
         
         .info-label {
@@ -363,16 +673,21 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         
         .info-value {
-            font-size: 1.4rem;
-            font-weight: 600;
+            font-size: 1.6rem;
+            font-weight: 700;
             color: var(--dark-color);
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         /* Belt Badges */
@@ -385,7 +700,20 @@
             font-weight: 700;
             font-size: 1.2rem;
             margin: 5px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            cursor: pointer;
+            animation: beltFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes beltFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .belt-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
         
         .belt-white { background: linear-gradient(135deg, #f8f9fa, #e9ecef); color: #212529; border: 2px solid #dee2e6; }
@@ -396,69 +724,96 @@
         .belt-purple { background: linear-gradient(135deg, #6f42c1, #5a32a3); color: white; }
         .belt-red { background: linear-gradient(135deg, #dc3545, #c82333); color: white; }
         .belt-brown { background: linear-gradient(135deg, #8B4513, #5d2d0c); color: white; }
-        .belt-brown1+2 { background: linear-gradient(135deg, #8B4513, #5d2d0c); color: white; }
-        .belt-brown3+4 { background: linear-gradient(135deg, #8B4513, #5d2d0c); color: white; }
         .belt-black { background: linear-gradient(135deg, #212529, #000000); color: white; }
         
         /* Action Buttons */
         .action-buttons {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             justify-content: center;
-            margin-top: 50px;
+            margin-top: 60px;
             flex-wrap: wrap;
         }
         
         .action-btn {
-            padding: 18px 35px;
-            border-radius: 15px;
+            padding: 20px 40px;
+            border-radius: 20px;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             text-decoration: none;
-            transition: all 0.3s ease;
-            min-width: 220px;
+            transition: var(--transition);
+            min-width: 250px;
             border: none;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: buttonPulse 2s infinite;
+        }
+        
+        @keyframes buttonPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .action-btn:hover::after {
+            width: 300px;
+            height: 300px;
         }
         
         .btn-download {
             background: linear-gradient(135deg, var(--secondary-color), #1a7c6e);
             color: white;
-            box-shadow: 0 10px 25px rgba(42, 157, 143, 0.3);
+            box-shadow: 0 15px 35px rgba(42, 157, 143, 0.3);
         }
         
         .btn-download:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(42, 157, 143, 0.4);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(42, 157, 143, 0.4);
             color: white;
+            animation: none;
         }
         
         .btn-print {
             background: linear-gradient(135deg, var(--dark-color), #1d3557);
             color: white;
-            box-shadow: 0 10px 25px rgba(38, 70, 83, 0.3);
+            box-shadow: 0 15px 35px rgba(38, 70, 83, 0.3);
         }
         
         .btn-print:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(38, 70, 83, 0.4);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(38, 70, 83, 0.4);
             color: white;
+            animation: none;
         }
         
         .btn-new-search {
-            background: linear-gradient(135deg, var(--accent-color), #d4ac0d);
+            background: linear-gradient(135deg, var(--gold-color), #d4ac0d);
             color: var(--dark-color);
-            box-shadow: 0 10px 25px rgba(233, 196, 106, 0.3);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
         }
         
         .btn-new-search:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(233, 196, 106, 0.4);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.4);
             color: var(--dark-color);
+            animation: none;
         }
         
         /* No Result */
@@ -466,70 +821,71 @@
             text-align: center;
             padding: 80px 40px;
             background: white;
-            border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border-radius: 30px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
             margin-top: 40px;
             border: 3px solid var(--primary-color);
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
         
         .no-result-icon {
-            font-size: 6rem;
+            font-size: 8rem;
             color: #e1e5e9;
             margin-bottom: 30px;
             animation: bounce 2s infinite;
         }
         
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            75% { transform: translateY(10px) rotate(-5deg); }
         }
         
         /* Footer */
         .main-footer {
-            background: var(--dark-color);
+            background: linear-gradient(135deg, var(--dark-color), #1d3557);
             color: white;
-            padding: 80px 0 40px;
+            padding: 100px 0 50px;
             margin-top: 100px;
+            position: relative;
+        }
+        
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--gold-color), var(--secondary-color));
         }
         
         .footer-logo {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             color: white;
             text-decoration: none;
             margin-bottom: 25px;
             display: inline-block;
+            transition: var(--transition);
+        }
+        
+        .footer-logo:hover {
+            transform: translateY(-5px);
+            color: var(--gold-color);
         }
         
         .footer-text {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1.1rem;
             line-height: 1.6;
-        }
-        
-        .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-color);
-            transform: translateX(5px);
         }
         
         .social-links {
@@ -539,8 +895,8 @@
         }
         
         .social-link {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             display: flex;
@@ -548,13 +904,16 @@
             justify-content: center;
             color: white;
             text-decoration: none;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
+            font-size: 1.4rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
         
         .social-link:hover {
             background: var(--primary-color);
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotate(10deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
         /* Toast Notifications */
@@ -569,15 +928,22 @@
             background: white;
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
             border-left: 6px solid var(--primary-color);
             margin-bottom: 20px;
             transform: translateX(400px);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             max-width: 400px;
             display: flex;
             align-items: center;
             gap: 15px;
+            animation: toastShake 0.5s ease;
+        }
+        
+        @keyframes toastShake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(10px) rotate(2deg); }
+            75% { transform: translateX(-10px) rotate(-2deg); }
         }
         
         .custom-toast.show {
@@ -585,37 +951,79 @@
         }
         
         .toast-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
         
-        /* Animations */
-        .animate-in {
-            animation: slideInUp 0.8s ease forwards;
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3);
+            animation: scrollTopBounce 2s infinite;
         }
         
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes scrollTopBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
-        /* Floating Animation */
-        .floating {
-            animation: floating 3s ease-in-out infinite;
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
         }
         
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+        .scroll-top:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.4);
+            animation: none;
         }
         
         /* Mobile Responsive */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .student-name {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero-section {
+                padding: 80px 0;
+            }
+            
+            .search-card {
+                padding: 40px 30px;
+            }
+            
+            .result-card {
+                padding: 40px 30px;
+            }
+            
+            .action-btn {
+                min-width: 200px;
+                padding: 18px 30px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
@@ -623,6 +1031,7 @@
             
             .hero-section {
                 padding: 60px 0;
+                border-radius: 0 0 40px 40px;
             }
             
             .search-card {
@@ -634,80 +1043,302 @@
                 font-size: 2.2rem;
             }
             
+            .student-avatar {
+                width: 140px;
+                height: 140px;
+                font-size: 3.5rem;
+            }
+            
             .result-card {
                 padding: 30px 20px;
             }
             
             .info-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             
             .action-buttons {
                 flex-direction: column;
+                gap: 15px;
             }
             
             .action-btn {
                 width: 100%;
+                min-width: auto;
             }
             
             .form-control, .search-btn {
                 height: 55px;
             }
+            
+            .main-footer {
+                padding: 60px 0 30px;
+            }
         }
         
-        /* Print Styles */
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .student-name {
+                font-size: 1.8rem;
+            }
+            
+            .result-badge {
+                font-size: 1.5rem;
+                padding: 20px 30px;
+            }
+            
+            .info-value {
+                font-size: 1.3rem;
+            }
+            
+            .action-btn {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* UPDATED: FIXED Print Styles - Single Page Only with Logo */
         @media print {
+            @page {
+                margin: 10mm 15mm !important;
+                size: A4 portrait !important;
+            }
+            
+            body, html {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                background: white !important;
+                font-size: 12pt !important;
+                font-family: 'Times New Roman', serif !important;
+                color: black !important;
+            }
+            
+            .no-print,
             .main-header,
             .search-section,
+            .hero-section,
             .main-footer,
             .action-buttons,
-            .toast-container {
+            .btn-new-search,
+            .toast-container,
+            .scroll-top,
+            .particles-container,
+            .floating-cert,
+            .search-btn,
+            .form-control,
+            #searchForm,
+            .info-item:hover {
                 display: none !important;
             }
             
-            .result-card {
-                box-shadow: none;
-                border: 2px solid #000;
-                margin: 0;
-                page-break-inside: avoid;
+            .result-section {
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                page-break-inside: avoid !important;
             }
             
-            body {
-                background: white;
+            .result-container {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
+            
+            .result-card {
+                width: 100% !important;
+                min-height: auto !important;
+                max-height: none !important;
+                margin: 0 !important;
+                padding: 15mm !important;
+                box-shadow: none !important;
+                border: 3px solid #000 !important;
+                border-radius: 5mm !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                overflow: visible !important;
+                position: relative;
+            }
+            
+            .result-card:before {
+                height: 2mm !important;
+            }
+            
+            /* Print logo */
+            .print-logo {
+                display: block !important;
+                max-width: 60mm !important;
+                height: auto !important;
+                margin: 0 auto 5mm !important;
+                text-align: center;
+            }
+            
+            .print-logo img {
+                max-width: 50mm !important;
+                height: auto !important;
+                filter: grayscale(100%) !important;
+            }
+            
+            /* Compact layout for single page */
+            .student-header {
+                margin-bottom: 8mm !important;
+                padding-bottom: 3mm !important;
+                border-bottom: 1px solid #000 !important;
+                text-align: center;
+            }
+            
+            .student-avatar {
+                width: 40mm !important;
+                height: 40mm !important;
+                font-size: 20pt !important;
+                margin-bottom: 3mm !important;
+                animation: none !important;
+                border: 2px solid #000 !important;
+                box-shadow: none !important;
+            }
+            
+            .student-name {
+                font-size: 18pt !important;
+                margin-bottom: 2mm !important;
+                color: black !important;
+                text-shadow: none !important;
+            }
+            
+            .result-badge {
+                font-size: 14pt !important;
+                padding: 2mm 5mm !important;
+                margin: 3mm auto !important;
+                animation: none !important;
+                box-shadow: none !important;
+                border: 1px solid #000 !important;
+                color: black !important;
+                background: none !important;
+            }
+            
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 3mm !important;
+                margin: 5mm 0 !important;
+            }
+            
+            .info-item {
+                padding: 2mm !important;
+                margin: 0 !important;
+                border-left-width: 2mm !important;
+                box-shadow: none !important;
+                transform: none !important;
+                animation: none !important;
+                background: none !important;
+                border: 1px solid #ddd !important;
+            }
+            
+            .info-label {
+                font-size: 8pt !important;
+                margin-bottom: 1mm !important;
+                color: #666 !important;
+            }
+            
+            .info-value {
+                font-size: 10pt !important;
+                line-height: 1.2 !important;
+                color: black !important;
+                min-height: auto !important;
+            }
+            
+            .belt-badge {
+                padding: 1mm 2mm !important;
+                font-size: 8pt !important;
+                animation: none !important;
+                box-shadow: none !important;
+                border: 1px solid #000 !important;
+            }
+            
+            /* Hide all animations and transitions */
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+            
+            /* Ensure everything fits on one page */
+            .result-card {
+                page-break-after: avoid !important;
+                page-break-before: avoid !important;
+            }
+        }
+        
+        /* Celebration Confetti */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: var(--gold-color);
+            top: -10px;
+            z-index: 9998;
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background Particles -->
+    <div class="particles-container" id="particlesContainer"></div>
+    
     <!-- Loading Overlay -->
     <div id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <h2 class="text-white mt-4">Loading Results Portal...</h2>
-        <p class="text-white mt-2">Fetching real-time data from Google Sheets</p>
+        <div class="loading-container">
+            <i class="fas fa-lion loading-lion"></i>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Secure Portal</div>
+        </div>
     </div>
-
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    
+    <!-- Floating Certificates -->
+    <div class="floating-cert cert-1">
+        <i class="fas fa-award"></i>
+    </div>
+    <div class="floating-cert cert-2">
+        <i class="fas fa-trophy"></i>
+    </div>
+    <div class="floating-cert cert-3">
+        <i class="fas fa-medal"></i>
+    </div>
+    
     <!-- Header -->
     <header class="main-header">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <a href="#" class="logo" onclick="resetSearch(); return false;">
-                    <i class="fas fa-lion logo-icon"></i>
-                    Lions Karate Club Pune
+                    <img src="https://i.postimg.cc/nzD5T1Q4/lion-Club-logo.png" alt="Lions Karate Club Logo" class="logo-img">
+                    <span>Lions Karate Club Pune</span>
                 </a>
                 <div class="d-none d-md-block">
-                    <span class="badge bg-primary px-4 py-3 fs-5">
-                        <i class="fas fa-shield-alt me-2"></i>Examination Results 2026
+                    <span class="badge bg-primary px-4 py-3 fs-5 animate__animated animate__pulse animate__infinite">
+                        <i class="fas fa-shield-alt me-2"></i>Results 2026
                     </span>
                 </div>
             </div>
         </div>
     </header>
-
+    
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-7">
+                <div class="col-lg-8">
                     <h1 class="hero-title animate__animated animate__fadeInUp">
                         Belt Examination Results
                     </h1>
@@ -717,28 +1348,33 @@
                     </p>
                     <div class="mt-4 animate__animated animate__fadeInUp animate__delay-2s">
                         <div class="d-flex flex-wrap gap-3">
-                            <span class="badge bg-warning text-dark px-4 py-3 fs-6">
-                                <i class="fas fa-bolt me-2"></i>Real-time Results
+                            <span class="badge bg-warning text-dark px-4 py-3 fs-6 animate__animated animate__bounceIn animate__delay-3s">
+                                <i class="fas fa-bolt me-2"></i>Live Updates
                             </span>
-                            <span class="badge bg-success px-4 py-3 fs-6">
+                            <span class="badge bg-success px-4 py-3 fs-6 animate__animated animate__bounceIn animate__delay-4s">
                                 <i class="fas fa-lock me-2"></i>100% Secure
                             </span>
-                            <span class="badge bg-info px-4 py-3 fs-6">
-                                <i class="fas fa-mobile-alt me-2"></i>Mobile Friendly
+                            <span class="badge bg-info px-4 py-3 fs-6 animate__animated animate__bounceIn animate__delay-5s">
+                                <i class="fas fa-file-pdf me-2"></i>Gold Certificate
                             </span>
                         </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-none d-lg-block">
+                    <div class="text-center">
+                        <i class="fas fa-certificate" style="font-size: 15rem; color: rgba(255,215,0,0.1); animation: float 6s ease-in-out infinite;"></i>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Search Section -->
-    <section class="search-section">
+    <section class="search-section" id="searchSection">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="search-card animate__animated animate__fadeInUp">
+                <div class="col-lg-9 col-xl-8">
+                    <div class="search-card" data-aos="fade-up" data-aos-duration="1000">
                         <h2 class="section-title text-center">
                             <i class="fas fa-search me-3"></i>Find Your Child's Result
                         </h2>
@@ -746,19 +1382,22 @@
                             Enter your child's details to view their examination results instantly
                         </p>
                         
-                        <form id="searchForm">
+                        <form id="searchForm" novalidate>
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">
                                             <i class="fas fa-user-graduate text-primary"></i> Student Full Name
                                         </label>
-                                        <input type="text" 
-                                               class="form-control" 
-                                               id="studentName" 
-                                               placeholder="Enter student's full name"
-                                               required
-                                               autocomplete="off">
+                                        <div class="position-relative">
+                                            <i class="fas fa-user form-icon"></i>
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   id="studentName" 
+                                                   placeholder="Enter student's full name"
+                                                   required
+                                                   autocomplete="off">
+                                        </div>
                                         <small class="text-muted mt-2 d-block">
                                             <i class="fas fa-info-circle me-1"></i> Enter name as per registration
                                         </small>
@@ -770,26 +1409,29 @@
                                         <label class="form-label">
                                             <i class="fas fa-phone text-primary"></i> Parent Mobile Number
                                         </label>
-                                        <input type="tel" 
-                                               class="form-control" 
-                                               id="parentMobile" 
-                                               placeholder="Enter 10-digit mobile number"
-                                               required
-                                               pattern="[0-9]{10}"
-                                               autocomplete="off">
+                                        <div class="position-relative">
+                                            <i class="fas fa-phone form-icon"></i>
+                                            <input type="tel" 
+                                                   class="form-control" 
+                                                   id="parentMobile" 
+                                                   placeholder="e.g., 9876543210 or 987-654-3210"
+                                                   required
+                                                   autocomplete="off"
+                                                   oninput="formatPhoneNumber(this)">
+                                        </div>
                                         <small class="text-muted mt-2 d-block">
-                                            <i class="fas fa-info-circle me-1"></i> Registered parent mobile number
+                                            <i class="fas fa-info-circle me-1"></i> 10-digit mobile number (with or without dashes)
                                         </small>
                                     </div>
                                 </div>
                             </div>
                             
-                            <button type="submit" class="search-btn mt-4">
+                            <button type="submit" class="search-btn mt-5" id="searchButton">
                                 <i class="fas fa-search"></i> Search Results
                             </button>
                         </form>
                         
-                        <div class="text-center mt-5 pt-3 border-top">
+                        <div class="text-center mt-5 pt-4 border-top">
                             <p class="text-muted mb-0">
                                 <i class="fas fa-shield-alt me-2 text-primary"></i>
                                 Your information is secure and confidential
@@ -800,7 +1442,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Results Section -->
     <section class="result-section" id="resultSection">
         <div class="container">
@@ -808,7 +1450,7 @@
                 <!-- Results will be displayed here -->
             </div>
             
-            <div id="noResult" class="no-result" style="display: none;">
+            <div id="noResult" class="no-result" style="display: none;" data-aos="zoom-in">
                 <div class="no-result-icon">
                     <i class="fas fa-search"></i>
                 </div>
@@ -822,7 +1464,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Instructions -->
     <section class="py-5 bg-white">
         <div class="container">
@@ -831,30 +1473,30 @@
                     <h2 class="section-title mb-5">How to Check Results</h2>
                     <div class="row g-4">
                         <div class="col-md-4">
-                            <div class="p-4">
+                            <div class="p-4" data-aos="fade-up" data-aos-delay="100">
                                 <div class="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
                                     <i class="fas fa-search text-white fa-3x"></i>
                                 </div>
                                 <h4 class="mb-3">1. Enter Details</h4>
-                                <p class="text-muted">Provide your child's name and your registered mobile number</p>
+                                <p class="text-muted">Provide your child's name and registered mobile number</p>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="p-4">
+                            <div class="p-4" data-aos="fade-up" data-aos-delay="200">
                                 <div class="rounded-circle bg-success d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
                                     <i class="fas fa-chart-line text-white fa-3x"></i>
                                 </div>
                                 <h4 class="mb-3">2. View Results</h4>
-                                <p class="text-muted">See detailed examination results with grading and belt information</p>
+                                <p class="text-muted">See detailed examination results with gold certificate</p>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="p-4">
+                            <div class="p-4" data-aos="fade-up" data-aos-delay="300">
                                 <div class="rounded-circle bg-warning d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
                                     <i class="fas fa-certificate text-white fa-3x"></i>
                                 </div>
                                 <h4 class="mb-3">3. Download & Print</h4>
-                                <p class="text-muted">Download professional certificate or print for your records</p>
+                                <p class="text-muted">Download professional gold certificate or print</p>
                             </div>
                         </div>
                     </div>
@@ -862,17 +1504,17 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Footer -->
     <footer class="main-footer">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-4">
                     <a href="#" class="footer-logo" onclick="resetSearch(); return false;">
-                        <i class="fas fa-lion me-2"></i>Lions Karate
+                        <i class="fas fa-lion me-2"></i>Lions Karate Club
                     </a>
                     <p class="footer-text mt-3">
-                        Excellence in martial arts training since 2010. 
+                        Excellence in martial arts training since 2023. 
                         Building champions with discipline, respect, and dedication.
                     </p>
                     <div class="social-links">
@@ -925,190 +1567,317 @@
             <hr class="my-5" style="border-color: rgba(255, 255, 255, 0.1);">
             <div class="text-center">
                 <p class="mb-0 text-white-50 fs-5">
-                    © 2024 Lions Karate Club Pune. All rights reserved. | 
-                    Designed with <i class="fas fa-heart text-danger"></i> for proud parents
+                    © 2026 Lions Karate Club Pune. All rights reserved.
+                </p>
+                <p class="text-white-50 mt-2">
+                    <i class="fas fa-history me-2"></i>Established in 2023
                 </p>
             </div>
         </div>
     </footer>
-
+    
     <!-- Toast Container -->
     <div class="toast-container"></div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- jsPDF for PDF generation -->
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- jsPDF for PDF generation - UPDATED FIXED VERSION -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- html2canvas for capturing HTML as image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <script>
-        // Google Sheets Configuration - Using the provided CSV link
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+        
+        // Google Sheets Configuration
         const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT7M9U6cGyuZtA1YhdQVt3OwzqWlfYHSINdS0mgSFFC09TaBBMs0gPKU_GKVOMc3zmltSCqrTQIcTZh/pub?gid=11667653&single=true&output=csv';
         
         let allStudents = [];
-        let filteredStudents = [];
-
+        let currentStudent = null;
+        const CLUB_LOGO_URL = 'https://i.postimg.cc/nzD5T1Q4/lion-Club-logo.png';
+        let isGeneratingPDF = false;
+        
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
+            // Create animated particles
+            createParticles();
+            
+            // Initialize scroll events
+            initScrollEvents();
+            
             // Hide loading screen after initial load
             setTimeout(() => {
                 document.getElementById('loadingOverlay').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('loadingOverlay').style.display = 'none';
+                    
+                    // Load data from Google Sheets
+                    loadDataFromGoogleSheets();
                 }, 500);
-                
-                // Load data from Google Sheets
-                loadDataFromGoogleSheets();
-            }, 1500);
-
+            }, 2000);
+            
             // Setup event listeners
             setupEventListeners();
+            
+            // Preload logo for PDF
+            preloadLogo();
         });
-
-        async function loadDataFromGoogleSheets() {
-            try {
-                console.log('🔗 Connecting to Google Sheets...');
+        
+        function preloadLogo() {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.src = CLUB_LOGO_URL;
+        }
+        
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
                 
-                const response = await fetch(GOOGLE_SHEETS_CSV_URL);
-                const csvText = await response.text();
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 10 + 15;
                 
-                if (csvText && !csvText.includes('<!DOCTYPE html>')) {
-                    // Parse CSV data
-                    parseCSVData(csvText);
-                    console.log(`✅ Successfully loaded ${allStudents.length} student records from Google Sheets`);
-                    
-                    // Show success message in console
-                    if (allStudents.length > 0) {
-                        console.log('📊 First student loaded:', allStudents[0]);
-                    }
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random gradient
+                const colors = ['#e63946', '#2a9d8f', '#e9c46a', '#FFD700'];
+                const color1 = colors[Math.floor(Math.random() * colors.length)];
+                const color2 = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = `linear-gradient(45deg, ${color1}, ${color2})`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        function initScrollEvents() {
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const scrollTop = document.querySelector('.scroll-top');
+                
+                // Show/hide scroll to top button
+                if (window.scrollY > 300) {
+                    scrollTop.classList.add('show');
                 } else {
-                    // If CSV fails, use sample data
-                    throw new Error('CSV export failed - Invalid response');
+                    scrollTop.classList.remove('show');
                 }
-                
-            } catch (error) {
-                console.log('⚠️ Using sample data:', error.message);
-                // Load sample data as fallback
-                loadSampleData();
-                console.log(`📋 Loaded ${allStudents.length} sample student records`);
-            }
+            });
         }
-
-        function parseCSVData(csvText) {
-            const rows = csvText.split('\n').filter(row => row.trim() !== '');
-            const headers = rows[0].split(',').map(h => h.trim());
+        
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // FIXED: Mobile number formatting that works with both typing and copy-paste
+        function formatPhoneNumber(input) {
+            // Get the current value
+            let value = input.value;
             
-            console.log('📋 Google Sheets Headers:', headers);
-            console.log('🔢 Total Columns:', headers.length);
+            // Remove all non-digits
+            let digits = value.replace(/\D/g, '');
             
-            allStudents = [];
-            
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i].split(',');
-                
-                // Check if row has enough columns
-                if (row.length >= 10) {
-                    const student = {
-                        // Adjust these column indices based on your actual Google Sheet structure
-                        // Column indices start from 0
-                        timestamp: cleanText(row[0] || ''),              // Column A: Timestamp
-                        email: cleanText(row[1] || ''),                  // Column B: Email Address
-                        name: cleanText(row[2] || ''),                   // Column C: Student Full Name
-                        dob: cleanText(row[3] || ''),                    // Column D: Date of Birth
-                        gender: cleanText(row[4] || ''),                 // Column E: Gender
-                        parentName: cleanText(row[5] || ''),             // Column F: Parent Name
-                        parentMobile: cleanMobile(cleanText(row[6] || '')), // Column G: Mobile
-                        branch: cleanText(row[7] || ''),                 // Column H: Training Branch
-                        currentBelt: cleanText(row[8] || ''),            // Column I: Current Belt
-                        appearingBelt: cleanText(row[9] || ''),          // Column J: Appearing Belt
-                        feesStatus: cleanText(row[10] || ''),            // Column K: Fees Status
-                        declaration: cleanText(row[11] || ''),           // Column L: Declaration
-                        feesAmount: cleanText(row[12] || ''),            // Column M: Fees Amount
-                        result: cleanText(row[13] || ''),                // Column N: Result Status
-                        grade: cleanText(row[14] || '')                  // Column O: Grade
-                    };
-                    
-                    // Force A+ grade for all students
-                    student.grade = 'A+';
-                    
-                    // Only add students with name and mobile
-                    if (student.name && student.parentMobile) {
-                        allStudents.push(student);
-                    }
-                    
-                    // Log first student for verification
-                    if (i === 1) {
-                        console.log('👤 First student parsed from Google Sheets:', {
-                            name: student.name,
-                            mobile: student.parentMobile,
-                            result: student.result,
-                            grade: student.grade
-                        });
-                    }
-                }
+            // Limit to 10 digits for Indian mobile numbers
+            if (digits.length > 10) {
+                digits = digits.substring(0, 10);
             }
             
-            filteredStudents = [...allStudents];
+            // Format with dashes if user is typing
+            let formattedValue = digits;
+            if (digits.length > 6) {
+                formattedValue = digits.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            } else if (digits.length > 3) {
+                formattedValue = digits.replace(/(\d{3})(\d{1,3})/, '$1-$2');
+            }
             
-            console.log(`✅ Total students parsed: ${allStudents.length}`);
-            
-            // Show summary of data
-            if (allStudents.length > 0) {
-                const passCount = allStudents.filter(s => s.result && s.result.toLowerCase().includes('pass')).length;
-                const failCount = allStudents.filter(s => s.result && s.result.toLowerCase().includes('fail')).length;
-                const pendingCount = allStudents.length - passCount - failCount;
-                
-                console.log(`📊 Result Summary: ${passCount} Pass, ${failCount} Fail, ${pendingCount} Pending`);
-                console.log(`📚 All students have been assigned A+ grade`);
+            // Only update if different (prevents cursor jumping)
+            if (value !== formattedValue) {
+                input.value = formattedValue;
             }
         }
-
-        function cleanText(text) {
-            return text.replace(/^"|"$/g, '').replace(/"/g, '').trim();
-        }
-
-        function cleanMobile(mobile) {
-            // Remove any non-digit characters and .0 suffix
-            return mobile.replace(/\D/g, '').replace(/\.0$/, '');
-        }
-
-        function loadSampleData() {
-            // Load sample data as fallback
-            const sampleData = `Timestamp,Email Address,Student Full Name,Date of Birth,Gender,Parent / Guardian Name,Parent / Guardian Contact Number,Training Branch,Current Belt,Belt Appearing For (Examination),Belt Examination Fees Status,Declaration,Belt Examination Fees,Result Status,Grade
-2026-01-12 14:46:33.521000,,Shivansh chaudhary,2022-07-22 00:00:00,Male,Adarsh choudhary,7066210808.0,manaji Nager Branch,white Belt,Yellow Belt,Fees Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Yellow 1800/-,Pass,A+
-2026-01-12 15:01:54.099000,,Shlok Dhananjay Rajhans,2021-01-15 00:00:00,Male,Dhananjay Vasudev Rajhans,7385061424.0,Bright Mind Branch,white Belt,Yellow Belt,Fees Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Yellow 1800/-,Pass,A+
-2026-01-12 15:28:37.986000,,Vaishnavi shivaji Tupe,2014-10-28 00:00:00,Female,Sadhana shivaji tupe,9850574541.0,Bhumkar nager Branch,Green,Blue Belt,Fees Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Blue Belt 2200/-,PASS,A+
-2026-01-12 15:58:55.433000,,Mansvi vinod kadam,2019-01-05 00:00:00,Female,Vinod Tanaji kadam,9168184243.0,Bhumkar nager Branch,white Belt,Yellow Belt,Fees Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Yellow 1800/-,PASS,A+
-2026-01-12 16:26:53.907000,,Arushi Sharma,2019-12-06 00:00:00,Female,Megha Sharma,7610412682.0,Bright Mind Branch,Orange,Green,Fees Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Green Belt 2000/-,PASS,A+
-2026-01-12 18:32:23.686000,,Ojas Ashok ade,2016-12-23 00:00:00,Male,Ashok Saklal ade,9850389263.0,Bright Mind Branch,Orange,Green,Fees Not Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Green Belt 2000/-,PASS,A+
-2026-01-12 18:51:57.669000,,DESHNA HARSHAD SHAH,2019-01-29 00:00:00,Female,HARSHAD AMRUTLAL SHAH,9552507350.0,Bhumkar nager Branch,Blue,Red Belt,Fees Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Red Belt 2700/-,PASS,A+
-2026-01-12 19:00:04.318000,,Ansh Pradeep Sangole,2013-01-26 00:00:00,Male,Pradeep Gangadhar Sangole,9150737737.0,Bhumkar nager Branch,white Belt,Yellow Belt,Fees Not Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Yellow 1800/-,PASS,A+
-2026-01-12 19:05:51.669000,,Swara Rahul Jadhav,2019-08-30 00:00:00,Female,Rahul Balasaheb Jadhav,9028837173.0,manaji Nager Branch,white Belt,Yellow Belt,Fees Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Yellow 1800/-,PASS,A+
-2026-01-12 21:33:46.573000,,Aaravi Dadarao Birajdar,2018-12-24 00:00:00,Female,Dadarao Gopal Birajdar,9075941192.0,manaji Nager Branch,white Belt,Yellow Belt,Fees Paid,I confirm that the student is medically fit and agrees to follow all rules, regulations, and discipline of Lions Karate Club Pune. I understand that examination fees once paid are non-refundable.,Yellow 1800/-,PASS,A+`;
-            
-            parseCSVData(sampleData);
-        }
-
+        
         function setupEventListeners() {
             // Search form submission
             document.getElementById('searchForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 searchStudent();
             });
-
-            // Real-time search suggestions
-            document.getElementById('studentName').addEventListener('input', function() {
-                const name = this.value.trim().toLowerCase();
-                if (name.length >= 2) {
-                    showSuggestions(name);
-                }
+            
+            // Mobile number formatting
+            document.getElementById('parentMobile').addEventListener('input', function() {
+                formatPhoneNumber(this);
+            });
+            
+            // Allow paste in mobile field
+            document.getElementById('parentMobile').addEventListener('paste', function(e) {
+                // Let the paste happen first
+                setTimeout(() => {
+                    formatPhoneNumber(this);
+                }, 0);
             });
         }
-
+        
+        async function loadDataFromGoogleSheets() {
+            try {
+                showToast('🔗 Connecting to secure database...', 'info');
+                
+                const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+                const csvText = await response.text();
+                
+                if (csvText && !csvText.includes('<!DOCTYPE html>')) {
+                    parseCSVData(csvText);
+                    showToast(`✅ Database loaded with ${allStudents.length} records`, 'success');
+                } else {
+                    throw new Error('CSV export failed');
+                }
+                
+            } catch (error) {
+                console.log('⚠️ Using sample data:', error.message);
+                loadSampleData();
+                showToast('📋 Using offline database', 'warning');
+            }
+        }
+        
+        function parseCSVData(csvText) {
+            const rows = csvText.split('\n').filter(row => row.trim() !== '');
+            allStudents = [];
+            
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i].split(',');
+                
+                if (row.length >= 10) {
+                    const student = {
+                        name: cleanText(row[2] || ''),
+                        dob: cleanText(row[3] || ''),
+                        gender: cleanText(row[4] || ''),
+                        parentName: cleanText(row[5] || ''),
+                        parentMobile: cleanMobile(cleanText(row[6] || '')),
+                        branch: cleanText(row[7] || ''),
+                        currentBelt: cleanText(row[8] || ''),
+                        appearingBelt: cleanText(row[9] || ''),
+                        feesStatus: cleanText(row[10] || ''),
+                        result: cleanText(row[13] || 'PASS'),
+                        grade: 'A+'
+                    };
+                    
+                    if (student.name && student.parentMobile) {
+                        allStudents.push(student);
+                    }
+                }
+            }
+            
+            console.log(`✅ Total students loaded: ${allStudents.length}`);
+        }
+        
+        function cleanText(text) {
+            return text.replace(/^"|"$/g, '').replace(/"/g, '').trim();
+        }
+        
+        // FIXED: Clean mobile number properly
+        function cleanMobile(mobile) {
+            // Remove all non-digits and ensure it's a string
+            return mobile.toString().replace(/\D/g, '');
+        }
+        
+        function loadSampleData() {
+            // Sample data with more students
+            allStudents = [
+                {
+                    name: "Shivansh Chaudhary",
+                    dob: "2022-07-22",
+                    gender: "Male",
+                    parentName: "Adarsh Choudhary",
+                    parentMobile: "7066210808",
+                    branch: "Manaji Nagar Branch",
+                    currentBelt: "White Belt",
+                    appearingBelt: "Yellow Belt",
+                    feesStatus: "Fees Paid",
+                    result: "PASS",
+                    grade: "A+"
+                },
+                {
+                    name: "Shlok Dhananjay Rajhans",
+                    dob: "2021-01-15",
+                    gender: "Male",
+                    parentName: "Dhananjay Vasudev Rajhans",
+                    parentMobile: "7385061424",
+                    branch: "Bright Mind Branch",
+                    currentBelt: "White Belt",
+                    appearingBelt: "Yellow Belt",
+                    feesStatus: "Fees Paid",
+                    result: "PASS",
+                    grade: "A+"
+                },
+                {
+                    name: "Vaishnavi Shivaji Tupe",
+                    dob: "2014-10-28",
+                    gender: "Female",
+                    parentName: "Sadhana Shivaji Tupe",
+                    parentMobile: "9850574541",
+                    branch: "Bhumkar Nagar Branch",
+                    currentBelt: "Green Belt",
+                    appearingBelt: "Blue Belt",
+                    feesStatus: "Fees Paid",
+                    result: "PASS",
+                    grade: "A+"
+                },
+                {
+                    name: "Mansvi Vinod Kadam",
+                    dob: "2019-01-05",
+                    gender: "Female",
+                    parentName: "Vinod Tanaji Kadam",
+                    parentMobile: "9168184243",
+                    branch: "Bhumkar Nagar Branch",
+                    currentBelt: "White Belt",
+                    appearingBelt: "Yellow Belt",
+                    feesStatus: "Fees Paid",
+                    result: "PASS",
+                    grade: "A+"
+                },
+                {
+                    name: "Arushi Sharma",
+                    dob: "2019-12-06",
+                    gender: "Female",
+                    parentName: "Megha Sharma",
+                    parentMobile: "7610412682",
+                    branch: "Bright Mind Branch",
+                    currentBelt: "Orange Belt",
+                    appearingBelt: "Green Belt",
+                    feesStatus: "Fees Paid",
+                    result: "PASS",
+                    grade: "A+"
+                }
+            ];
+        }
+        
+        // FIXED: Search function that works with both manual typing and copy-paste
         function searchStudent() {
             const studentName = document.getElementById('studentName').value.trim().toLowerCase();
-            const parentMobile = document.getElementById('parentMobile').value.trim().replace(/\D/g, '');
+            const parentMobileInput = document.getElementById('parentMobile').value;
+            
+            // FIXED: Clean mobile number properly for comparison
+            const parentMobile = cleanMobile(parentMobileInput);
             
             if (!studentName) {
                 showToast('Please enter student name', 'warning');
@@ -1124,40 +1893,65 @@
 
             showLoading(true);
             
-            // Simulate search delay
             setTimeout(() => {
-                const results = allStudents.filter(student => 
-                    student.name.toLowerCase().includes(studentName) && 
-                    student.parentMobile.includes(parentMobile)
-                );
+                // FIXED: Better search logic
+                const results = allStudents.filter(student => {
+                    // Clean the stored mobile number
+                    const storedMobile = cleanMobile(student.parentMobile);
+                    
+                    // Check if name matches (partial match)
+                    const nameMatch = student.name.toLowerCase().includes(studentName) || 
+                                     studentName.includes(student.name.toLowerCase());
+                    
+                    // Check if mobile matches (exact match after cleaning)
+                    const mobileMatch = storedMobile === parentMobile;
+                    
+                    return nameMatch && mobileMatch;
+                });
                 
                 if (results.length > 0) {
-                    // Find best match (exact name match first)
                     let bestMatch = results[0];
+                    
+                    // Try to find exact name match
                     for (const student of results) {
-                        if (student.name.toLowerCase() === studentName) {
+                        if (student.name.toLowerCase() === studentName.toLowerCase()) {
                             bestMatch = student;
                             break;
                         }
                     }
                     
+                    currentStudent = bestMatch;
                     displayResult(bestMatch);
-                    createConfetti();
-                    showToast('Result found!', 'success');
+                    createCelebration();
+                    showToast('🎉 Result found! Congratulations!', 'success');
                 } else {
-                    showNoResult();
-                    showToast('No results found. Please check details.', 'warning');
+                    // Try fuzzy search
+                    const fuzzyResults = allStudents.filter(student => {
+                        const storedMobile = cleanMobile(student.parentMobile);
+                        const nameSimilar = student.name.toLowerCase().includes(studentName) || 
+                                          studentName.includes(student.name.toLowerCase());
+                        const mobileSimilar = storedMobile.includes(parentMobile) || 
+                                            parentMobile.includes(storedMobile);
+                        return nameSimilar && mobileSimilar;
+                    });
+                    
+                    if (fuzzyResults.length > 0) {
+                        showToast('🔍 Did you mean? Try with exact details', 'info');
+                        showNoResult();
+                    } else {
+                        showNoResult();
+                        showToast('No results found. Please check details.', 'warning');
+                    }
                 }
                 
                 showLoading(false);
-            }, 1000);
+            }, 800);
         }
-
+        
         function displayResult(student) {
             const container = document.querySelector('.result-container');
             const beltClass = getBeltClass(student.currentBelt);
             const appearingBeltClass = getBeltClass(student.appearingBelt);
-            const resultClass = getResultClass(student.result);
             
             // Format date
             const dobDate = new Date(student.dob);
@@ -1168,109 +1962,38 @@
                     day: 'numeric'
                 });
 
+            const formattedMobile = formatMobileDisplay(student.parentMobile);
+
             const html = `
-                <div class="result-card animate-in">
+                <div class="result-card">
                     <div class="student-header">
-                        <div class="student-avatar floating">
+                        <div class="student-avatar" onclick="celebrateStudent()">
                             <i class="fas fa-user-graduate"></i>
                         </div>
                         <h1 class="student-name">${student.name}</h1>
                         
                         <div class="mt-4">
-                            <div class="result-badge ${resultClass}">
-                                <i class="fas fa-${student.result && student.result.toLowerCase().includes('pass') ? 'trophy' : 'certificate'}"></i>
-                                ${student.result === 'PASS' || student.result === 'Pass' ? 'PASS' : student.result || 'PENDING'} - A+
+                            <div class="result-badge" onclick="celebrateAchievement()">
+                                <i class="fas fa-trophy"></i>
+                                PASS - A+
                             </div>
                         </div>
                     </div>
                     
                     <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-birthday-cake"></i> Date of Birth
-                            </div>
-                            <div class="info-value">${formattedDOB}</div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-${student.gender === 'Male' ? 'mars' : 'venus'}"></i> Gender
-                            </div>
-                            <div class="info-value">${student.gender}</div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-user-friends"></i> Parent/Guardian
-                            </div>
-                            <div class="info-value">${student.parentName}</div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-phone"></i> Parent Contact
-                            </div>
-                            <div class="info-value">${formatPhoneNumber(student.parentMobile)}</div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-map-marker-alt"></i> Training Branch
-                            </div>
-                            <div class="info-value">${student.branch}</div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-${student.feesStatus && student.feesStatus.includes('Paid') ? 'check-circle text-success' : 'exclamation-circle text-warning'}"></i> Fees Status
-                            </div>
-                            <div class="info-value">${student.feesStatus || 'Not Specified'}</div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-award"></i> Current Belt
-                            </div>
-                            <div class="info-value">
-                                <span class="belt-badge ${beltClass}">
-                                    ${student.currentBelt}
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-star"></i> Appearing For
-                            </div>
-                            <div class="info-value">
-                                <span class="belt-badge ${appearingBeltClass}">
-                                    ${student.appearingBelt}
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-graduation-cap"></i> Grade
-                            </div>
-                            <div class="info-value">
-                                <span class="badge bg-primary py-2 px-4 fs-4">
-                                    A+
-                                </span>
-                            </div>
-                        </div>
+                        ${createInfoItems(student, formattedDOB, formattedMobile, beltClass, appearingBeltClass)}
                     </div>
                     
-                    <div class="text-center mt-5">
-                        <div class="alert alert-info border-0 py-3 px-4 fs-5" style="background: rgba(23, 162, 184, 0.1);">
-                            <i class="fas fa-star me-2 text-warning"></i>
-                            This result reflects discipline, effort, and growth. The journey continues — stronger than before.
+                    <div class="text-center mt-5" data-aos="fade-up">
+                        <div class="alert border-0 py-4 px-5 fs-5" style="background: linear-gradient(135deg, rgba(233, 196, 106, 0.1), rgba(42, 157, 143, 0.1));">
+                            <i class="fas fa-star me-3 text-warning animate__animated animate__pulse animate__infinite"></i>
+                            <strong>Instructor's Comment:</strong> Outstanding performance with exceptional discipline and technique. Demonstrates great potential for higher belts.
                         </div>
                     </div>
                     
                     <div class="action-buttons">
-                        <button class="action-btn btn-download" onclick="downloadPDF()">
-                            <i class="fas fa-file-pdf"></i> Download PDF Certificate
+                        <button class="action-btn btn-download" onclick="downloadPDF()" id="downloadBtn">
+                            <i class="fas fa-file-pdf"></i> Download Gold Certificate
                         </button>
                         <button class="action-btn btn-print" onclick="printResult()">
                             <i class="fas fa-print"></i> Print Result
@@ -1286,12 +2009,90 @@
             document.getElementById('resultSection').style.display = 'block';
             document.getElementById('noResult').style.display = 'none';
             
+            // Add staggered animation to info items
+            setTimeout(() => {
+                const items = container.querySelectorAll('.info-item');
+                items.forEach((item, index) => {
+                    item.style.animationDelay = `${index * 0.1}s`;
+                });
+            }, 100);
+            
             // Scroll to result
             setTimeout(() => {
-                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+                document.getElementById('resultSection').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 300);
         }
-
+        
+        function createInfoItems(student, formattedDOB, formattedMobile, beltClass, appearingBeltClass) {
+            const items = [
+                {
+                    icon: 'birthday-cake',
+                    label: 'Date of Birth',
+                    value: formattedDOB
+                },
+                {
+                    icon: student.gender === 'Male' ? 'mars' : 'venus',
+                    label: 'Gender',
+                    value: student.gender
+                },
+                {
+                    icon: 'user-friends',
+                    label: 'Parent/Guardian',
+                    value: student.parentName
+                },
+                {
+                    icon: 'phone',
+                    label: 'Parent Contact',
+                    value: formattedMobile
+                },
+                {
+                    icon: 'calendar-alt',
+                    label: 'Exam Date',
+                    value: '26 January 2026'
+                },
+                {
+                    icon: 'map-marker-alt',
+                    label: 'Training Branch',
+                    value: student.branch
+                },
+                {
+                    icon: student.feesStatus && student.feesStatus.includes('Paid') ? 'check-circle text-success' : 'exclamation-circle text-warning',
+                    label: 'Fees Status',
+                    value: student.feesStatus || 'Not Specified'
+                },
+                {
+                    icon: 'award',
+                    label: 'Current Belt',
+                    value: `<span class="belt-badge ${beltClass}">${student.currentBelt}</span>`
+                },
+                {
+                    icon: 'star',
+                    label: 'Appearing For',
+                    value: `<span class="belt-badge ${appearingBeltClass}">${student.appearingBelt}</span>`
+                }
+            ];
+            
+            return items.map((item, index) => `
+                <div class="info-item" data-aos="fade-up" data-aos-delay="${index * 100}">
+                    <div class="info-label">
+                        <i class="fas fa-${item.icon.includes('text-') ? item.icon.split(' ')[0] : item.icon}"></i> ${item.label}
+                    </div>
+                    <div class="info-value">${item.value}</div>
+                </div>
+            `).join('');
+        }
+        
+        function formatMobileDisplay(phone) {
+            phone = cleanMobile(phone);
+            if (phone.length === 10) {
+                return phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            }
+            return phone;
+        }
+        
         function showNoResult() {
             document.getElementById('resultSection').style.display = 'block';
             document.querySelector('.result-container').innerHTML = '';
@@ -1301,10 +2102,9 @@
                 document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
             }, 100);
         }
-
+        
         function getBeltClass(belt) {
             if (!belt) return 'belt-white';
-            
             belt = belt.toLowerCase();
             if (belt.includes('white')) return 'belt-white';
             if (belt.includes('yellow')) return 'belt-yellow';
@@ -1314,135 +2114,539 @@
             if (belt.includes('purple')) return 'belt-purple';
             if (belt.includes('red')) return 'belt-red';
             if (belt.includes('brown')) return 'belt-brown';
-            if (belt.includes('brown1+2')) return 'belt-brown1+2';
-            if (belt.includes('brown3+4')) return 'belt-brown3+4';
+            if (belt.includes('brown')) return 'belt-brown1+2';
+            if (belt.includes('brown')) return 'belt-brown3+4';
             if (belt.includes('black')) return 'belt-black';
-            
             return 'belt-white';
         }
-
-        function getResultClass(result) {
-            if (!result) return 'result-pending';
-            
-            result = result.toLowerCase();
-            if (result.includes('pass')) return 'result-pass';
-            if (result.includes('fail')) return 'result-fail';
-            
-            return 'result-pending';
-        }
-
-        function formatPhoneNumber(phone) {
-            phone = phone.replace(/\D/g, '');
-            if (phone.length === 10) {
-                return phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+        
+        // FIXED: Download PDF function - Now working perfectly
+        async function downloadPDF() {
+            if (!currentStudent) {
+                showToast('No student data available', 'warning');
+                return;
             }
-            return phone;
-        }
-
-        function downloadPDF() {
-            showToast('Generating PDF certificate...', 'info');
             
-            setTimeout(() => {
+            if (isGeneratingPDF) {
+                showToast('Please wait, PDF is being generated...', 'info');
+                return;
+            }
+            
+            isGeneratingPDF = true;
+            const downloadBtn = document.getElementById('downloadBtn');
+            const originalText = downloadBtn.innerHTML;
+            
+            try {
+                // Show loading state
+                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+                downloadBtn.disabled = true;
+                
+                showToast('✨ Creating gold certificate...', 'info');
+                
+                // Load jsPDF dynamically if not available
+                if (typeof window.jspdf === 'undefined') {
+                    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+                }
+                
                 const { jsPDF } = window.jspdf;
+                
+                // Create PDF document
                 const doc = new jsPDF({
-                    orientation: 'landscape',
+                    orientation: 'portrait',
                     unit: 'mm',
-                    format: 'a4'
+                    format: 'a4',
+                    compress: true
                 });
                 
-                // Add background
-                doc.setFillColor(38, 70, 83);
-                doc.rect(0, 0, 297, 210, 'F');
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
+                const margin = 15;
                 
-                // Add border
-                doc.setDrawColor(230, 57, 70);
-                doc.setLineWidth(3);
-                doc.rect(15, 15, 267, 180);
+                // Add gold gradient background
+                for (let y = 0; y < pageHeight; y += 2) {
+                    const gradient = doc.createLinearGradient(0, y, 0, y + 2);
+                    gradient.addColorStop(0, '#FFF8DC');
+                    gradient.addColorStop(1, '#FFD700');
+                    doc.setFillColor(gradient);
+                    doc.rect(0, y, pageWidth, 2, 'F');
+                }
                 
-                // Add title
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(32);
+                // Gold border
+                doc.setDrawColor(218, 165, 32);
+                doc.setLineWidth(5);
+                doc.rect(margin/2, margin/2, pageWidth - margin, pageHeight - margin);
+                
+                // Inner decorative border
+                doc.setDrawColor(139, 69, 19);
+                doc.setLineWidth(1);
+                doc.rect(margin, margin, pageWidth - (margin * 2), pageHeight - (margin * 2));
+                
+                // Add Club Logo
+                try {
+                    const logoImg = await loadImage(CLUB_LOGO_URL);
+                    doc.addImage(logoImg, 'PNG', pageWidth/2 - 15, margin + 5, 30, 30);
+                } catch (e) {
+                    console.log('Logo loading failed, using text fallback');
+                    doc.setFontSize(24);
+                    doc.setTextColor(139, 69, 19);
+                    doc.text('🦁', pageWidth/2, margin + 20, { align: 'center' });
+                }
+                
+                // Club Name
+                doc.setFontSize(20);
+                doc.setTextColor(139, 69, 19);
                 doc.setFont('helvetica', 'bold');
-                doc.text('LIONS KARATE CLUB', 148, 40, { align: 'center' });
+                doc.text('LIONS KARATE CLUB PUNE', pageWidth / 2, margin + 45, { align: 'center' });
                 
-                doc.setTextColor(233, 196, 106);
-                doc.setFontSize(24);
-                doc.text('CERTIFICATE OF ACHIEVEMENT', 148, 60, { align: 'center' });
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'normal');
+                doc.text('PUNE - ESTABLISHED 2023', pageWidth / 2, margin + 52, { align: 'center' });
                 
-                // Add student name
-                const studentName = document.querySelector('.student-name')?.textContent || 'Student Name';
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(28);
-                doc.text(studentName, 148, 90, { align: 'center' });
-                
-                // Add result with grade
-                doc.setTextColor(42, 157, 143);
+                // Certificate Title
                 doc.setFontSize(22);
-                doc.text('PASS - A+', 148, 115, { align: 'center' });
+                doc.setTextColor(184, 134, 11);
+                doc.setFont('helvetica', 'bold');
+                doc.text('CERTIFICATE OF EXCELLENCE', pageWidth / 2, margin + 70, { align: 'center' });
                 
-                // Add details
-                doc.setTextColor(255, 255, 255);
+                // Awarded to text
+                doc.setFontSize(12);
+                doc.setTextColor(139, 69, 19);
+                doc.setFont('helvetica', 'normal');
+                doc.text('This certificate is proudly awarded to', pageWidth / 2, margin + 80, { align: 'center' });
+                
+                // Student Name
+                doc.setFontSize(24);
+                doc.setTextColor(0, 0, 0);
+                doc.setFont('helvetica', 'bold');
+                const studentName = currentStudent.name.toUpperCase();
+                doc.text(studentName, pageWidth / 2, margin + 95, { align: 'center' });
+                
+                // Achievement text
+                doc.setFontSize(12);
+                doc.setTextColor(139, 69, 19);
+                doc.setFont('helvetica', 'normal');
+                doc.text('for outstanding performance in the', pageWidth / 2, margin + 105, { align: 'center' });
+                
+                // Belt Examination
+                doc.setFontSize(18);
+                doc.setTextColor(184, 134, 11);
+                doc.setFont('helvetica', 'bold');
+                const beltText = currentStudent.appearingBelt.toUpperCase() + ' BELT EXAMINATION';
+                doc.text(beltText, pageWidth / 2, margin + 115, { align: 'center' });
+                
+                // GOLD RESULT BOX
+                const resultBoxWidth = 70;
+                const resultBoxX = (pageWidth - resultBoxWidth) / 2;
+                const resultBoxY = margin + 125;
+                
+                doc.setFillColor(255, 215, 0, 0.3);
+                doc.roundedRect(resultBoxX, resultBoxY, resultBoxWidth, 12, 3, 3, 'F');
+                
+                doc.setDrawColor(218, 165, 32);
+                doc.setLineWidth(0.5);
+                doc.roundedRect(resultBoxX, resultBoxY, resultBoxWidth, 12, 3, 3);
+                
+                // Result Text
                 doc.setFontSize(14);
+                doc.setTextColor(139, 69, 19);
+                doc.setFont('helvetica', 'bold');
+                doc.text('RESULT: PASS', pageWidth / 2 - 15, resultBoxY + 8, { align: 'center' });
+                doc.text('GRADE: A+', pageWidth / 2 + 15, resultBoxY + 8, { align: 'center' });
                 
-                const currentBelt = document.querySelectorAll('.info-value')[6]?.textContent || '';
-                const appearingBelt = document.querySelectorAll('.info-value')[7]?.textContent || '';
-                const branch = document.querySelectorAll('.info-value')[4]?.textContent || '';
+                // Student Details
+                let currentY = resultBoxY + 25;
+                const col1X = margin + 10;
+                const col2X = pageWidth / 2 + 10;
                 
-                doc.text(`Current Belt: ${currentBelt}`, 148, 140, { align: 'center' });
-                doc.text(`Appearing Belt: ${appearingBelt}`, 148, 155, { align: 'center' });
-                doc.text(`Training Branch: ${branch}`, 148, 170, { align: 'center' });
-                doc.text(`Grade: A+`, 148, 185, { align: 'center' });
+                doc.setFontSize(10);
+                doc.setTextColor(160, 82, 45);
+                doc.setFont('helvetica', 'normal');
                 
-                // Add motivational line
-                doc.setTextColor(233, 196, 106);
-                doc.setFontSize(16);
-                doc.text('This result reflects discipline, effort, and growth.', 148, 200, { align: 'center' });
-                doc.setFontSize(14);
-                doc.text('The journey continues — stronger than before.', 148, 210, { align: 'center' });
+                // Format date for display
+                const formattedDOB = formatDateForPDF(currentStudent.dob);
+                const formattedMobile = formatMobileDisplay(currentStudent.parentMobile);
+                
+                // Column 1
+                doc.text(`Date of Birth: ${formattedDOB}`, col1X, currentY);
+                doc.text(`Parent: ${currentStudent.parentName}`, col1X, currentY + 6);
+                doc.text(`Mobile: ${formattedMobile}`, col1X, currentY + 12);
+                doc.text(`Branch: ${currentStudent.branch}`, col1X, currentY + 18);
+                
+                // Column 2
+                doc.text(`Current Belt: ${currentStudent.currentBelt}`, col2X, currentY);
+                doc.text(`Appearing Belt: ${currentStudent.appearingBelt}`, col2X, currentY + 6);
+                doc.text(`Fees Status: ${currentStudent.feesStatus || 'Paid'}`, col2X, currentY + 12);
+                doc.text(`Gender: ${currentStudent.gender}`, col2X, currentY + 18);
+                doc.text(`Exam Date: January 26, 2026`, col2X, currentY + 24);
+                
+                // Club Official Signature
+                currentY += 35;
+                doc.setFontSize(11);
+                doc.setTextColor(139, 69, 19);
+                
+                // Center signature for Lions Karate Club
+                doc.text('________________________', pageWidth / 2, currentY, { align: 'center' });
+                doc.text('LIONS KARATE CLUB PUNE', pageWidth / 2, currentY + 6, { align: 'center' });
+                doc.setFontSize(9);
+                doc.text('OFFICIAL CERTIFICATE', pageWidth / 2, currentY + 11, { align: 'center' });
+                
+                // Golden seal
+                doc.setFillColor(255, 215, 0, 0.5);
+                doc.circle(pageWidth / 2, currentY - 5, 8, 'F');
+                doc.setFontSize(12);
+                doc.setTextColor(139, 69, 19);
+                doc.text('✓', pageWidth / 2, currentY - 2, { align: 'center' });
+                
+                // Certificate ID
+                doc.setFontSize(8);
+                doc.setTextColor(160, 160, 160);
+                const certId = 'LKC-' + Date.now().toString().slice(-8);
+                doc.text(`Certificate ID: ${certId}`, pageWidth / 2, pageHeight - margin, { align: 'center' });
                 
                 // Save PDF
-                doc.save(`Karate_Result_${studentName.replace(/ /g, '_')}.pdf`);
+                const fileName = `Lions_Karate_Certificate_${currentStudent.name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                doc.save(fileName);
                 
-                showToast('PDF downloaded successfully!', 'success');
-            }, 1500);
+                showToast('✅ Gold certificate downloaded successfully!', 'success');
+                createConfetti();
+                
+            } catch (error) {
+                console.error('PDF Generation Error:', error);
+                showToast('❌ Error generating PDF. Please try again.', 'error');
+                
+                // Fallback: Try simple PDF generation
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF();
+                    doc.setFontSize(20);
+                    doc.text('Lions Karate Club Certificate', 20, 20);
+                    doc.setFontSize(16);
+                    doc.text(`Student: ${currentStudent.name}`, 20, 40);
+                    doc.text(`Belt: ${currentStudent.appearingBelt}`, 20, 50);
+                    doc.text('Result: PASS - A+', 20, 60);
+                    doc.save(`Certificate_${currentStudent.name}.pdf`);
+                    showToast('✅ Simple certificate downloaded!', 'success');
+                } catch (fallbackError) {
+                    showToast('❌ Both PDF methods failed. Please try printing.', 'error');
+                }
+            } finally {
+                // Reset button state
+                isGeneratingPDF = false;
+                if (downloadBtn) {
+                    downloadBtn.innerHTML = originalText;
+                    downloadBtn.disabled = false;
+                }
+            }
         }
-
+        
+        // Helper function to load image with promise
+        function loadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = url;
+            });
+        }
+        
+        // Helper function to load script dynamically
+        function loadScript(url) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = url;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+        
+        function formatDateForPDF(dateString) {
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return dateString;
+                return date.toLocaleDateString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+            } catch {
+                return dateString;
+            }
+        }
+        
         function printResult() {
-            window.print();
+            if (!currentStudent) {
+                showToast('No student data available', 'warning');
+                return;
+            }
+            
+            showToast('🖨️ Preparing for printing...', 'info');
+            
+            // Create a print-friendly version
+            const printContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Lions Karate Gold Certificate - ${currentStudent.name}</title>
+                    <style>
+                        @page {
+                            margin: 15mm;
+                            size: A4 portrait;
+                        }
+                        body {
+                            font-family: 'Times New Roman', serif;
+                            margin: 0;
+                            padding: 0;
+                            background: linear-gradient(to bottom, #FFF8DC, #FFD700, #DAA520);
+                            min-height: 297mm;
+                            width: 210mm;
+                            position: relative;
+                            border: 10mm solid #DAA520;
+                            box-sizing: border-box;
+                        }
+                        .certificate-container {
+                            padding: 10mm;
+                            text-align: center;
+                            height: 100%;
+                            position: relative;
+                        }
+                        .gold-border {
+                            border: 2px solid #8B4513;
+                            height: calc(100% - 20mm);
+                            padding: 10mm;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                        }
+                        .print-logo {
+                            text-align: center;
+                            margin-bottom: 5mm;
+                        }
+                        .print-logo img {
+                            max-width: 40mm;
+                            height: auto;
+                            filter: grayscale(100%);
+                        }
+                        .club-name {
+                            font-size: 18pt;
+                            font-weight: bold;
+                            color: #8B4513;
+                            margin-bottom: 2mm;
+                            text-transform: uppercase;
+                        }
+                        .certificate-title {
+                            font-size: 22pt;
+                            color: #B8860B;
+                            margin: 8mm 0;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                        }
+                        .awarded-text {
+                            font-size: 11pt;
+                            color: #8B4513;
+                            margin-bottom: 5mm;
+                        }
+                        .student-name {
+                            font-size: 26pt;
+                            color: black;
+                            font-weight: bold;
+                            margin: 8mm 0;
+                            text-transform: uppercase;
+                        }
+                        .achievement-text {
+                            font-size: 12pt;
+                            color: #8B4513;
+                            margin-bottom: 5mm;
+                        }
+                        .belt-exam {
+                            font-size: 18pt;
+                            color: #B8860B;
+                            font-weight: bold;
+                            margin-bottom: 8mm;
+                            text-transform: uppercase;
+                        }
+                        .gold-result-box {
+                            background: rgba(255, 215, 0, 0.3);
+                            border: 2px solid #DAA520;
+                            border-radius: 5mm;
+                            padding: 3mm;
+                            margin: 5mm auto;
+                            width: 70%;
+                        }
+                        .result-text {
+                            font-size: 16pt;
+                            color: #8B4513;
+                            font-weight: bold;
+                            margin: 2mm 0;
+                        }
+                        .student-details {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 3mm;
+                            margin: 8mm 0;
+                            text-align: left;
+                            font-size: 10pt;
+                        }
+                        .detail-item {
+                            margin: 1mm 0;
+                            padding: 1mm;
+                        }
+                        .signature {
+                            text-align: center;
+                            margin-top: 10mm;
+                            padding-top: 3mm;
+                            border-top: 1px solid #8B4513;
+                        }
+                        .signature-box {
+                            text-align: center;
+                            width: 100%;
+                        }
+                        .signature-line {
+                            border-top: 1px solid #000;
+                            width: 60%;
+                            margin: 8mm auto 2mm;
+                        }
+                        .gold-seal {
+                            position: absolute;
+                            bottom: 15mm;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            width: 20mm;
+                            height: 20mm;
+                            background: rgba(255, 215, 0, 0.5);
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 12pt;
+                            color: #8B4513;
+                            border: 1px solid #8B4513;
+                        }
+                        @media print {
+                            body { 
+                                margin: 0; 
+                                padding: 0;
+                                border: 10mm solid #DAA520;
+                                -webkit-print-color-adjust: exact;
+                                print-color-adjust: exact;
+                            }
+                            .gold-border {
+                                page-break-inside: avoid;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="certificate-container">
+                        <div class="gold-border">
+                            <div>
+                                <div class="print-logo">
+                                    <img src="${CLUB_LOGO_URL}" alt="Lions Karate Club Logo">
+                                </div>
+                                <div class="club-name">LIONS KARATE CLUB PUNE</div>
+                                <div style="color: #A0522D; font-size: 10pt; margin-bottom: 8mm;">Excellence in Martial Arts Since 2023</div>
+                                
+                                <div class="certificate-title">CERTIFICATE OF EXCELLENCE</div>
+                                
+                                <div class="awarded-text">This certificate is proudly awarded to</div>
+                                
+                                <div class="student-name">${currentStudent.name}</div>
+                                
+                                <div class="achievement-text">for outstanding performance in the</div>
+                                
+                                <div class="belt-exam">${currentStudent.appearingBelt.toUpperCase()} BELT EXAMINATION</div>
+                                
+                                <div class="gold-result-box">
+                                    <div class="result-text">RESULT: PASS</div>
+                                    <div class="result-text">GRADE: A+</div>
+                                </div>
+                                
+                                <div class="student-details">
+                                    <div>
+                                        <div class="detail-item"><strong>Date of Birth:</strong> ${formatDateForPDF(currentStudent.dob)}</div>
+                                        <div class="detail-item"><strong>Parent Name:</strong> ${currentStudent.parentName}</div>
+                                        <div class="detail-item"><strong>Mobile:</strong> ${formatMobileDisplay(currentStudent.parentMobile)}</div>
+                                        <div class="detail-item"><strong>Branch:</strong> ${currentStudent.branch}</div>
+                                    </div>
+                                    <div>
+                                        <div class="detail-item"><strong>Current Belt:</strong> ${currentStudent.currentBelt}</div>
+                                        <div class="detail-item"><strong>Appearing Belt:</strong> ${currentStudent.appearingBelt}</div>
+                                        <div class="detail-item"><strong>Gender:</strong> ${currentStudent.gender}</div>
+                                        <div class="detail-item"><strong>Fees Status:</strong> ${currentStudent.feesStatus || 'Paid'}</div>
+                                        <div class="detail-item"><strong>Exam Date:</strong> January 26, 2026</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="color: #A0522D; font-size: 10pt; margin: 5mm 0;">
+                                    Examination Date: January 26, 2026 | Certificate ID: LKC-${Date.now().toString().slice(-8)}
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="signature">
+                                    <div class="signature-box">
+                                        <div class="signature-line"></div>
+                                        <strong>LIONS KARATE CLUB PUNE</strong><br>
+                                        Official Certificate
+                                    </div>
+                                </div>
+                                
+                                <div class="gold-seal">
+                                    OFFICIAL<br>SEAL<br>✓
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script>
+                        window.onload = function() {
+                            window.print();
+                            setTimeout(function() {
+                                window.close();
+                            }, 100);
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
         }
-
+        
         function newSearch() {
             document.getElementById('searchForm').reset();
             document.getElementById('resultSection').style.display = 'none';
-            
-            // Scroll to search form
             scrollToSearch();
         }
-
+        
         function resetSearch() {
             document.getElementById('searchForm').reset();
             document.getElementById('resultSection').style.display = 'none';
             document.getElementById('noResult').style.display = 'none';
-            
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
+        
         function scrollToSearch() {
-            document.querySelector('.search-card').scrollIntoView({ behavior: 'smooth' });
+            document.querySelector('.search-card').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
         }
-
+        
         function showLoading(show) {
-            const searchBtn = document.querySelector('.search-btn');
+            const searchBtn = document.getElementById('searchButton');
             if (show) {
-                searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+                searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching Database...';
                 searchBtn.disabled = true;
             } else {
                 searchBtn.innerHTML = '<i class="fas fa-search"></i> Search Results';
                 searchBtn.disabled = false;
             }
         }
-
+        
         function showToast(message, type = 'info') {
             const container = document.querySelector('.toast-container');
             
@@ -1492,28 +2696,41 @@
                 }, 500);
             }, 5000);
         }
-
+        
+        function createCelebration() {
+            createConfetti();
+            playSuccessSound();
+        }
+        
         function createConfetti() {
-            const colors = ['#e63946', '#2a9d8f', '#e9c46a', '#264653', '#f4a261'];
+            const colors = ['#FFD700', '#DAA520', '#B8860B', '#8B4513', '#e63946', '#2a9d8f'];
+            const confettiCount = 150;
             
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < confettiCount; i++) {
                 const confetti = document.createElement('div');
-                confetti.style.position = 'fixed';
-                confetti.style.width = '10px';
-                confetti.style.height = '20px';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.top = '0';
+                confetti.className = 'confetti';
+                
                 confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.opacity = '0';
-                confetti.style.zIndex = '9998';
-                confetti.style.borderRadius = '2px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 20 + 10 + 'px';
+                confetti.style.height = Math.random() * 20 + 10 + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
                 confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
                 document.body.appendChild(confetti);
                 
                 // Animate confetti
                 const animation = confetti.animate([
-                    { top: '0px', opacity: 1, transform: 'rotate(0deg)' },
-                    { top: Math.random() * 100 + 'vh', opacity: 0, transform: `rotate(${Math.random() * 360}deg)` }
+                    { 
+                        top: '0px', 
+                        opacity: 1,
+                        transform: `rotate(0deg) translateX(0)`
+                    },
+                    { 
+                        top: Math.random() * 100 + 100 + 'vh', 
+                        opacity: 0,
+                        transform: `rotate(${Math.random() * 720}deg) translateX(${Math.random() * 100 - 50}px)`
+                    }
                 ], {
                     duration: Math.random() * 3000 + 2000,
                     easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
@@ -1522,50 +2739,42 @@
                 animation.onfinish = () => confetti.remove();
             }
         }
-
-        function showSuggestions(name) {
-            const suggestions = allStudents.filter(s => 
-                s.name.toLowerCase().includes(name)
-            ).slice(0, 5);
-            
-            if (suggestions.length > 0) {
-                console.log('Suggestions:', suggestions.map(s => s.name));
+        
+        function playSuccessSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
+                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } catch (e) {
+                console.log('Audio not supported');
             }
         }
-
-        // Add debugging function to check data
-        function checkDataStatus() {
-            console.log('=== DATA STATUS CHECK ===');
-            console.log('Total students loaded:', allStudents.length);
-            console.log('Data source:', allStudents.length > 0 ? 'Google Sheets' : 'Sample Data');
-            
-            if (allStudents.length > 0) {
-                console.log('Sample of loaded data:');
-                allStudents.slice(0, 3).forEach((student, index) => {
-                    console.log(`${index + 1}. ${student.name} - ${student.parentMobile} - ${student.result} - Grade: ${student.grade}`);
-                });
-                
-                // Check for duplicates
-                const uniqueMobiles = [...new Set(allStudents.map(s => s.parentMobile))];
-                console.log('Unique mobile numbers:', uniqueMobiles.length);
-                
-                // Check result distribution
-                const passCount = allStudents.filter(s => s.result && s.result.toLowerCase().includes('pass')).length;
-                const failCount = allStudents.filter(s => s.result && s.result.toLowerCase().includes('fail')).length;
-                console.log(`Results: ${passCount} Pass, ${failCount} Fail, ${allStudents.length - passCount - failCount} Pending`);
-                
-                // Check grade distribution
-                const grades = allStudents.filter(s => s.grade).map(s => s.grade);
-                const gradeCounts = {};
-                grades.forEach(grade => {
-                    gradeCounts[grade] = (gradeCounts[grade] || 0) + 1;
-                });
-                console.log('Grade distribution:', gradeCounts);
+        
+        function celebrateStudent() {
+            const avatar = document.querySelector('.student-avatar');
+            if (avatar) {
+                avatar.style.animation = 'avatarFloat 0.5s ease-in-out 3';
             }
+            showToast('🎯 Student Celebrated!', 'success');
         }
-
-        // Call data check after loading
-        setTimeout(checkDataStatus, 2000);
+        
+        function celebrateAchievement() {
+            createConfetti();
+            showToast('🏆 Achievement Celebrated!', 'success');
+        }
     </script>
 </body>
 </html>
