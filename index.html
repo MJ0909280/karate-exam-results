@@ -1108,7 +1108,7 @@
         /* UPDATED: FIXED Print Styles - Single Page Only with Logo */
         @media print {
             @page {
-                margin: 10mm 15mm !important;
+                margin: 5mm !important;
                 size: A4 portrait !important;
             }
             
@@ -1118,9 +1118,11 @@
                 width: 100% !important;
                 height: auto !important;
                 background: white !important;
-                font-size: 12pt !important;
+                font-size: 10pt !important;
                 font-family: 'Times New Roman', serif !important;
                 color: black !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             
             .no-print,
@@ -1137,7 +1139,9 @@
             .search-btn,
             .form-control,
             #searchForm,
-            .info-item:hover {
+            .info-item:hover,
+            .info-item:before,
+            .result-card:before {
                 display: none !important;
             }
             
@@ -1148,6 +1152,8 @@
                 width: 100% !important;
                 height: auto !important;
                 page-break-inside: avoid !important;
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
             }
             
             .result-container {
@@ -1161,107 +1167,96 @@
                 min-height: auto !important;
                 max-height: none !important;
                 margin: 0 !important;
-                padding: 15mm !important;
+                padding: 10mm !important;
                 box-shadow: none !important;
-                border: 3px solid #000 !important;
-                border-radius: 5mm !important;
+                border: 2px solid #000 !important;
+                border-radius: 3mm !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
                 overflow: visible !important;
                 position: relative;
-            }
-            
-            .result-card:before {
-                height: 2mm !important;
-            }
-            
-            /* Print logo */
-            .print-logo {
-                display: block !important;
-                max-width: 60mm !important;
-                height: auto !important;
-                margin: 0 auto 5mm !important;
-                text-align: center;
-            }
-            
-            .print-logo img {
-                max-width: 50mm !important;
-                height: auto !important;
-                filter: grayscale(100%) !important;
+                background: white !important;
             }
             
             /* Compact layout for single page */
             .student-header {
-                margin-bottom: 8mm !important;
-                padding-bottom: 3mm !important;
+                margin-bottom: 5mm !important;
+                padding-bottom: 2mm !important;
                 border-bottom: 1px solid #000 !important;
                 text-align: center;
             }
             
             .student-avatar {
-                width: 40mm !important;
-                height: 40mm !important;
-                font-size: 20pt !important;
-                margin-bottom: 3mm !important;
+                width: 30mm !important;
+                height: 30mm !important;
+                font-size: 16pt !important;
+                margin-bottom: 2mm !important;
                 animation: none !important;
                 border: 2px solid #000 !important;
                 box-shadow: none !important;
+                background: #f0f0f0 !important;
             }
             
             .student-name {
-                font-size: 18pt !important;
+                font-size: 16pt !important;
                 margin-bottom: 2mm !important;
                 color: black !important;
                 text-shadow: none !important;
+                font-weight: bold !important;
             }
             
             .result-badge {
-                font-size: 14pt !important;
-                padding: 2mm 5mm !important;
-                margin: 3mm auto !important;
+                font-size: 12pt !important;
+                padding: 2mm 4mm !important;
+                margin: 2mm auto !important;
                 animation: none !important;
                 box-shadow: none !important;
                 border: 1px solid #000 !important;
                 color: black !important;
-                background: none !important;
+                background: #f0f0f0 !important;
+                font-weight: bold !important;
             }
             
             .info-grid {
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 3mm !important;
-                margin: 5mm 0 !important;
+                gap: 2mm !important;
+                margin: 3mm 0 !important;
             }
             
             .info-item {
                 padding: 2mm !important;
                 margin: 0 !important;
-                border-left-width: 2mm !important;
+                border-left-width: 1mm !important;
                 box-shadow: none !important;
                 transform: none !important;
                 animation: none !important;
-                background: none !important;
+                background: #f8f8f8 !important;
                 border: 1px solid #ddd !important;
+                page-break-inside: avoid !important;
             }
             
             .info-label {
-                font-size: 8pt !important;
-                margin-bottom: 1mm !important;
+                font-size: 7pt !important;
+                margin-bottom: 0.5mm !important;
                 color: #666 !important;
+                font-weight: bold !important;
             }
             
             .info-value {
-                font-size: 10pt !important;
+                font-size: 9pt !important;
                 line-height: 1.2 !important;
                 color: black !important;
                 min-height: auto !important;
+                font-weight: normal !important;
             }
             
             .belt-badge {
-                padding: 1mm 2mm !important;
-                font-size: 8pt !important;
+                padding: 0.5mm 1mm !important;
+                font-size: 7pt !important;
                 animation: none !important;
                 box-shadow: none !important;
-                border: 1px solid #000 !important;
+                border: 0.5px solid #000 !important;
+                background: #f0f0f0 !important;
             }
             
             /* Hide all animations and transitions */
@@ -1274,6 +1269,28 @@
             .result-card {
                 page-break-after: avoid !important;
                 page-break-before: avoid !important;
+                break-inside: avoid !important;
+                height: auto !important;
+                min-height: 0 !important;
+            }
+            
+            /* Add print logo */
+            .print-logo {
+                display: block !important;
+                text-align: center !important;
+                margin-bottom: 3mm !important;
+            }
+            
+            .print-logo img {
+                max-width: 40mm !important;
+                height: auto !important;
+                filter: grayscale(100%) !important;
+            }
+            
+            /* Hide decorative elements */
+            .student-avatar i,
+            .result-badge i {
+                display: none !important;
             }
         }
         
@@ -1587,6 +1604,7 @@
     
     <!-- jsPDF for PDF generation - UPDATED FIXED VERSION -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.js"></script>
     
     <!-- html2canvas for capturing HTML as image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -1967,6 +1985,9 @@
             const html = `
                 <div class="result-card">
                     <div class="student-header">
+                        <div class="print-logo no-print">
+                            <img src="${CLUB_LOGO_URL}" alt="Lions Karate Club Logo" style="max-width: 80px;">
+                        </div>
                         <div class="student-avatar" onclick="celebrateStudent()">
                             <i class="fas fa-user-graduate"></i>
                         </div>
@@ -2120,7 +2141,7 @@
             return 'belt-white';
         }
         
-        // FIXED: Download PDF function - Now working perfectly
+        // FIXED: Professional PDF generation with colors
         async function downloadPDF() {
             if (!currentStudent) {
                 showToast('No student data available', 'warning');
@@ -2141,13 +2162,9 @@
                 downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
                 downloadBtn.disabled = true;
                 
-                showToast('✨ Creating gold certificate...', 'info');
+                showToast('✨ Creating professional gold certificate...', 'info');
                 
-                // Load jsPDF dynamically if not available
-                if (typeof window.jspdf === 'undefined') {
-                    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-                }
-                
+                // Load jsPDF
                 const { jsPDF } = window.jspdf;
                 
                 // Create PDF document
@@ -2160,154 +2177,188 @@
                 
                 const pageWidth = doc.internal.pageSize.getWidth();
                 const pageHeight = doc.internal.pageSize.getHeight();
-                const margin = 15;
+                const margin = 10;
                 
-                // Add gold gradient background
-                for (let y = 0; y < pageHeight; y += 2) {
-                    const gradient = doc.createLinearGradient(0, y, 0, y + 2);
-                    gradient.addColorStop(0, '#FFF8DC');
-                    gradient.addColorStop(1, '#FFD700');
-                    doc.setFillColor(gradient);
-                    doc.rect(0, y, pageWidth, 2, 'F');
+                // ========== GOLD GRADIENT BACKGROUND ==========
+                // Create gold gradient background
+                const gradientColors = [
+                    {pos: 0, color: [255, 248, 220]}, // Cornsilk
+                    {pos: 0.3, color: [255, 215, 0]}, // Gold
+                    {pos: 0.7, color: [255, 215, 0]}, // Gold
+                    {pos: 1, color: [255, 248, 220]}  // Cornsilk
+                ];
+                
+                // Draw gradient rectangles
+                const gradientHeight = 5;
+                for (let y = 0; y < pageHeight; y += gradientHeight) {
+                    const pos = y / pageHeight;
+                    let color;
+                    if (pos <= 0.3) {
+                        const t = pos / 0.3;
+                        color = [
+                            Math.round(255 + (255-255)*t),
+                            Math.round(248 + (215-248)*t),
+                            Math.round(220 + (0-220)*t)
+                        ];
+                    } else if (pos <= 0.7) {
+                        color = [255, 215, 0];
+                    } else {
+                        const t = (pos - 0.7) / 0.3;
+                        color = [
+                            Math.round(255 + (255-255)*t),
+                            Math.round(215 + (248-215)*t),
+                            Math.round(0 + (220-0)*t)
+                        ];
+                    }
+                    doc.setFillColor(color[0], color[1], color[2]);
+                    doc.rect(0, y, pageWidth, gradientHeight, 'F');
                 }
                 
-                // Gold border
-                doc.setDrawColor(218, 165, 32);
-                doc.setLineWidth(5);
+                // ========== GOLD BORDER ==========
+                doc.setDrawColor(218, 165, 32); // Goldenrod
+                doc.setLineWidth(3);
                 doc.rect(margin/2, margin/2, pageWidth - margin, pageHeight - margin);
                 
                 // Inner decorative border
-                doc.setDrawColor(139, 69, 19);
+                doc.setDrawColor(184, 134, 11); // DarkGoldenrod
                 doc.setLineWidth(1);
                 doc.rect(margin, margin, pageWidth - (margin * 2), pageHeight - (margin * 2));
                 
-                // Add Club Logo
+                // ========== CLUB LOGO ==========
                 try {
                     const logoImg = await loadImage(CLUB_LOGO_URL);
-                    doc.addImage(logoImg, 'PNG', pageWidth/2 - 15, margin + 5, 30, 30);
+                    doc.addImage(logoImg, 'PNG', pageWidth/2 - 12, margin + 5, 24, 24);
                 } catch (e) {
                     console.log('Logo loading failed, using text fallback');
-                    doc.setFontSize(24);
-                    doc.setTextColor(139, 69, 19);
-                    doc.text('🦁', pageWidth/2, margin + 20, { align: 'center' });
+                    doc.setFontSize(20);
+                    doc.setTextColor(184, 134, 11);
+                    doc.text('🦁', pageWidth/2, margin + 18, { align: 'center' });
                 }
                 
-                // Club Name
+                // ========== CLUB NAME ==========
+                doc.setFontSize(18);
+                doc.setTextColor(139, 69, 19); // SaddleBrown
+                doc.setFont('helvetica', 'bold');
+                doc.text('LIONS KARATE CLUB PUNE', pageWidth / 2, margin + 40, { align: 'center' });
+                
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                doc.setTextColor(160, 82, 45); // Sienna
+                doc.text('EXCELLENCE IN MARTIAL ARTS - ESTABLISHED 2023', pageWidth / 2, margin + 46, { align: 'center' });
+                
+                // ========== CERTIFICATE TITLE ==========
                 doc.setFontSize(20);
-                doc.setTextColor(139, 69, 19);
+                doc.setTextColor(184, 134, 11); // DarkGoldenrod
                 doc.setFont('helvetica', 'bold');
-                doc.text('LIONS KARATE CLUB PUNE', pageWidth / 2, margin + 45, { align: 'center' });
+                doc.text('CERTIFICATE OF EXCELLENCE', pageWidth / 2, margin + 65, { align: 'center' });
                 
-                doc.setFontSize(12);
+                // ========== AWARDED TO TEXT ==========
+                doc.setFontSize(11);
+                doc.setTextColor(139, 69, 19); // SaddleBrown
                 doc.setFont('helvetica', 'normal');
-                doc.text('PUNE - ESTABLISHED 2023', pageWidth / 2, margin + 52, { align: 'center' });
+                doc.text('This certificate is proudly awarded to', pageWidth / 2, margin + 75, { align: 'center' });
                 
-                // Certificate Title
+                // ========== STUDENT NAME ==========
                 doc.setFontSize(22);
-                doc.setTextColor(184, 134, 11);
-                doc.setFont('helvetica', 'bold');
-                doc.text('CERTIFICATE OF EXCELLENCE', pageWidth / 2, margin + 70, { align: 'center' });
-                
-                // Awarded to text
-                doc.setFontSize(12);
-                doc.setTextColor(139, 69, 19);
-                doc.setFont('helvetica', 'normal');
-                doc.text('This certificate is proudly awarded to', pageWidth / 2, margin + 80, { align: 'center' });
-                
-                // Student Name
-                doc.setFontSize(24);
-                doc.setTextColor(0, 0, 0);
+                doc.setTextColor(0, 0, 0); // Black
                 doc.setFont('helvetica', 'bold');
                 const studentName = currentStudent.name.toUpperCase();
-                doc.text(studentName, pageWidth / 2, margin + 95, { align: 'center' });
+                doc.text(studentName, pageWidth / 2, margin + 90, { align: 'center' });
                 
-                // Achievement text
-                doc.setFontSize(12);
-                doc.setTextColor(139, 69, 19);
+                // ========== ACHIEVEMENT TEXT ==========
+                doc.setFontSize(11);
+                doc.setTextColor(139, 69, 19); // SaddleBrown
                 doc.setFont('helvetica', 'normal');
-                doc.text('for outstanding performance in the', pageWidth / 2, margin + 105, { align: 'center' });
+                doc.text('for outstanding performance in the', pageWidth / 2, margin + 100, { align: 'center' });
                 
-                // Belt Examination
-                doc.setFontSize(18);
-                doc.setTextColor(184, 134, 11);
+                // ========== BELT EXAMINATION ==========
+                doc.setFontSize(16);
+                doc.setTextColor(184, 134, 11); // DarkGoldenrod
                 doc.setFont('helvetica', 'bold');
                 const beltText = currentStudent.appearingBelt.toUpperCase() + ' BELT EXAMINATION';
-                doc.text(beltText, pageWidth / 2, margin + 115, { align: 'center' });
+                doc.text(beltText, pageWidth / 2, margin + 110, { align: 'center' });
                 
-                // GOLD RESULT BOX
+                // ========== GOLD RESULT BOX ==========
                 const resultBoxWidth = 70;
                 const resultBoxX = (pageWidth - resultBoxWidth) / 2;
-                const resultBoxY = margin + 125;
+                const resultBoxY = margin + 120;
                 
-                doc.setFillColor(255, 215, 0, 0.3);
+                // Gold gradient box background
+                doc.setFillColor(255, 215, 0, 0.5); // Gold with transparency
                 doc.roundedRect(resultBoxX, resultBoxY, resultBoxWidth, 12, 3, 3, 'F');
                 
-                doc.setDrawColor(218, 165, 32);
+                // Box border
+                doc.setDrawColor(218, 165, 32); // Goldenrod
                 doc.setLineWidth(0.5);
                 doc.roundedRect(resultBoxX, resultBoxY, resultBoxWidth, 12, 3, 3);
                 
                 // Result Text
-                doc.setFontSize(14);
-                doc.setTextColor(139, 69, 19);
+                doc.setFontSize(13);
+                doc.setTextColor(139, 69, 19); // SaddleBrown
                 doc.setFont('helvetica', 'bold');
                 doc.text('RESULT: PASS', pageWidth / 2 - 15, resultBoxY + 8, { align: 'center' });
                 doc.text('GRADE: A+', pageWidth / 2 + 15, resultBoxY + 8, { align: 'center' });
                 
-                // Student Details
+                // ========== STUDENT DETAILS ==========
                 let currentY = resultBoxY + 25;
                 const col1X = margin + 10;
                 const col2X = pageWidth / 2 + 10;
                 
-                doc.setFontSize(10);
-                doc.setTextColor(160, 82, 45);
+                doc.setFontSize(9);
+                doc.setTextColor(101, 67, 33); // Dark Brown
                 doc.setFont('helvetica', 'normal');
                 
                 // Format date for display
                 const formattedDOB = formatDateForPDF(currentStudent.dob);
                 const formattedMobile = formatMobileDisplay(currentStudent.parentMobile);
                 
-                // Column 1
+                // Column 1 - Left side details
                 doc.text(`Date of Birth: ${formattedDOB}`, col1X, currentY);
                 doc.text(`Parent: ${currentStudent.parentName}`, col1X, currentY + 6);
                 doc.text(`Mobile: ${formattedMobile}`, col1X, currentY + 12);
                 doc.text(`Branch: ${currentStudent.branch}`, col1X, currentY + 18);
                 
-                // Column 2
+                // Column 2 - Right side details
                 doc.text(`Current Belt: ${currentStudent.currentBelt}`, col2X, currentY);
                 doc.text(`Appearing Belt: ${currentStudent.appearingBelt}`, col2X, currentY + 6);
                 doc.text(`Fees Status: ${currentStudent.feesStatus || 'Paid'}`, col2X, currentY + 12);
                 doc.text(`Gender: ${currentStudent.gender}`, col2X, currentY + 18);
                 doc.text(`Exam Date: January 26, 2026`, col2X, currentY + 24);
                 
-                // Club Official Signature
+                // ========== CLUB OFFICIAL SIGNATURE ==========
                 currentY += 35;
-                doc.setFontSize(11);
-                doc.setTextColor(139, 69, 19);
+                doc.setFontSize(10);
+                doc.setTextColor(139, 69, 19); // SaddleBrown
                 
                 // Center signature for Lions Karate Club
                 doc.text('________________________', pageWidth / 2, currentY, { align: 'center' });
                 doc.text('LIONS KARATE CLUB PUNE', pageWidth / 2, currentY + 6, { align: 'center' });
-                doc.setFontSize(9);
+                doc.setFontSize(8);
                 doc.text('OFFICIAL CERTIFICATE', pageWidth / 2, currentY + 11, { align: 'center' });
                 
-                // Golden seal
-                doc.setFillColor(255, 215, 0, 0.5);
+                // ========== GOLDEN SEAL ==========
+                doc.setFillColor(255, 215, 0, 0.6); // Gold with transparency
                 doc.circle(pageWidth / 2, currentY - 5, 8, 'F');
-                doc.setFontSize(12);
-                doc.setTextColor(139, 69, 19);
+                doc.setDrawColor(184, 134, 11); // DarkGoldenrod
+                doc.setLineWidth(0.5);
+                doc.circle(pageWidth / 2, currentY - 5, 8);
+                
+                doc.setFontSize(10);
+                doc.setTextColor(139, 69, 19); // SaddleBrown
                 doc.text('✓', pageWidth / 2, currentY - 2, { align: 'center' });
                 
-                // Certificate ID
-                doc.setFontSize(8);
-                doc.setTextColor(160, 160, 160);
+                // ========== CERTIFICATE ID ==========
+                doc.setFontSize(7);
+                doc.setTextColor(128, 128, 128); // Gray
                 const certId = 'LKC-' + Date.now().toString().slice(-8);
                 doc.text(`Certificate ID: ${certId}`, pageWidth / 2, pageHeight - margin, { align: 'center' });
+                doc.text(`Generated: ${new Date().toLocaleDateString('en-IN')}`, pageWidth / 2, pageHeight - margin + 4, { align: 'center' });
                 
-                // Save PDF
+                // ========== SAVE PDF ==========
                 const fileName = `Lions_Karate_Certificate_${currentStudent.name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
                 doc.save(fileName);
                 
-                showToast('✅ Gold certificate downloaded successfully!', 'success');
+                showToast('✅ Professional gold certificate downloaded successfully!', 'success');
                 createConfetti();
                 
             } catch (error) {
@@ -2319,11 +2370,16 @@
                     const { jsPDF } = window.jspdf;
                     const doc = new jsPDF();
                     doc.setFontSize(20);
+                    doc.setTextColor(139, 69, 19);
                     doc.text('Lions Karate Club Certificate', 20, 20);
                     doc.setFontSize(16);
                     doc.text(`Student: ${currentStudent.name}`, 20, 40);
+                    doc.setTextColor(184, 134, 11);
                     doc.text(`Belt: ${currentStudent.appearingBelt}`, 20, 50);
+                    doc.setTextColor(0, 100, 0);
                     doc.text('Result: PASS - A+', 20, 60);
+                    doc.setTextColor(139, 69, 19);
+                    doc.text(`Exam Date: January 26, 2026`, 20, 70);
                     doc.save(`Certificate_${currentStudent.name}.pdf`);
                     showToast('✅ Simple certificate downloaded!', 'success');
                 } catch (fallbackError) {
@@ -2346,18 +2402,7 @@
                 img.crossOrigin = 'anonymous';
                 img.onload = () => resolve(img);
                 img.onerror = reject;
-                img.src = url;
-            });
-        }
-        
-        // Helper function to load script dynamically
-        function loadScript(url) {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = url;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.appendChild(script);
+                img.src = url + '?v=' + Date.now();
             });
         }
         
@@ -2375,6 +2420,7 @@
             }
         }
         
+        // FIXED: Print function that works on mobile and prints in single page
         function printResult() {
             if (!currentStudent) {
                 showToast('No student data available', 'warning');
@@ -2383,237 +2429,404 @@
             
             showToast('🖨️ Preparing for printing...', 'info');
             
-            // Create a print-friendly version
+            // Create a simple, mobile-friendly print dialog
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                showToast('❌ Please allow popups to print', 'error');
+                return;
+            }
+            
+            // Get current date for print
+            const currentDate = new Date().toLocaleDateString('en-IN', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
+            
             const printContent = `
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title>Lions Karate Gold Certificate - ${currentStudent.name}</title>
+                    <title>Lions Karate Certificate - ${currentStudent.name}</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <style>
-                        @page {
-                            margin: 15mm;
-                            size: A4 portrait;
+                        @media print {
+                            @page {
+                                margin: 5mm !important;
+                                size: A4 portrait !important;
+                            }
+                            body {
+                                margin: 0 !important;
+                                padding: 0 !important;
+                                font-size: 11pt !important;
+                                font-family: 'Times New Roman', serif !important;
+                                color: black !important;
+                                background: white !important;
+                                -webkit-print-color-adjust: exact !important;
+                                print-color-adjust: exact !important;
+                            }
+                            .certificate-container {
+                                page-break-inside: avoid !important;
+                                page-break-before: avoid !important;
+                                page-break-after: avoid !important;
+                            }
                         }
+                        
                         body {
                             font-family: 'Times New Roman', serif;
                             margin: 0;
-                            padding: 0;
-                            background: linear-gradient(to bottom, #FFF8DC, #FFD700, #DAA520);
-                            min-height: 297mm;
-                            width: 210mm;
-                            position: relative;
-                            border: 10mm solid #DAA520;
-                            box-sizing: border-box;
-                        }
-                        .certificate-container {
                             padding: 10mm;
-                            text-align: center;
-                            height: 100%;
+                            background: #fff;
+                            color: #000;
+                        }
+                        
+                        .certificate-container {
+                            width: 100%;
+                            max-width: 190mm;
+                            margin: 0 auto;
+                            padding: 8mm;
+                            border: 3mm solid #DAA520;
+                            background: linear-gradient(to bottom, #FFF8DC, #FFD700, #FFF8DC);
+                            box-sizing: border-box;
                             position: relative;
                         }
+                        
                         .gold-border {
                             border: 2px solid #8B4513;
-                            height: calc(100% - 20mm);
-                            padding: 10mm;
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: space-between;
+                            padding: 6mm;
+                            height: 100%;
                         }
+                        
                         .print-logo {
                             text-align: center;
-                            margin-bottom: 5mm;
+                            margin-bottom: 4mm;
                         }
+                        
                         .print-logo img {
-                            max-width: 40mm;
+                            max-width: 35mm;
                             height: auto;
                             filter: grayscale(100%);
                         }
+                        
                         .club-name {
-                            font-size: 18pt;
+                            font-size: 16pt;
                             font-weight: bold;
                             color: #8B4513;
                             margin-bottom: 2mm;
+                            text-align: center;
                             text-transform: uppercase;
                         }
+                        
+                        .club-subtitle {
+                            font-size: 9pt;
+                            color: #A0522D;
+                            text-align: center;
+                            margin-bottom: 6mm;
+                        }
+                        
                         .certificate-title {
-                            font-size: 22pt;
-                            color: #B8860B;
-                            margin: 8mm 0;
-                            font-weight: bold;
-                            text-transform: uppercase;
-                        }
-                        .awarded-text {
-                            font-size: 11pt;
-                            color: #8B4513;
-                            margin-bottom: 5mm;
-                        }
-                        .student-name {
-                            font-size: 26pt;
-                            color: black;
-                            font-weight: bold;
-                            margin: 8mm 0;
-                            text-transform: uppercase;
-                        }
-                        .achievement-text {
-                            font-size: 12pt;
-                            color: #8B4513;
-                            margin-bottom: 5mm;
-                        }
-                        .belt-exam {
                             font-size: 18pt;
                             color: #B8860B;
+                            text-align: center;
+                            margin: 6mm 0;
                             font-weight: bold;
-                            margin-bottom: 8mm;
                             text-transform: uppercase;
                         }
+                        
+                        .awarded-text {
+                            font-size: 10pt;
+                            color: #8B4513;
+                            text-align: center;
+                            margin-bottom: 4mm;
+                        }
+                        
+                        .student-name {
+                            font-size: 20pt;
+                            color: #000;
+                            font-weight: bold;
+                            text-align: center;
+                            margin: 6mm 0;
+                            text-transform: uppercase;
+                            border-bottom: 2px solid #8B4513;
+                            padding-bottom: 3mm;
+                        }
+                        
+                        .achievement-text {
+                            font-size: 10pt;
+                            color: #8B4513;
+                            text-align: center;
+                            margin-bottom: 4mm;
+                        }
+                        
+                        .belt-exam {
+                            font-size: 14pt;
+                            color: #B8860B;
+                            font-weight: bold;
+                            text-align: center;
+                            margin-bottom: 6mm;
+                            text-transform: uppercase;
+                        }
+                        
                         .gold-result-box {
                             background: rgba(255, 215, 0, 0.3);
                             border: 2px solid #DAA520;
-                            border-radius: 5mm;
+                            border-radius: 3mm;
                             padding: 3mm;
-                            margin: 5mm auto;
-                            width: 70%;
+                            margin: 4mm auto;
+                            width: 80%;
+                            text-align: center;
                         }
+                        
                         .result-text {
-                            font-size: 16pt;
+                            font-size: 13pt;
                             color: #8B4513;
                             font-weight: bold;
-                            margin: 2mm 0;
+                            margin: 1mm 0;
                         }
+                        
                         .student-details {
                             display: grid;
                             grid-template-columns: 1fr 1fr;
-                            gap: 3mm;
-                            margin: 8mm 0;
-                            text-align: left;
-                            font-size: 10pt;
+                            gap: 2mm;
+                            margin: 6mm 0;
+                            font-size: 9pt;
                         }
+                        
                         .detail-item {
                             margin: 1mm 0;
                             padding: 1mm;
+                            border-bottom: 1px dashed #ccc;
                         }
+                        
+                        .detail-label {
+                            font-weight: bold;
+                            color: #8B4513;
+                        }
+                        
+                        .detail-value {
+                            color: #000;
+                        }
+                        
                         .signature {
                             text-align: center;
-                            margin-top: 10mm;
+                            margin-top: 8mm;
                             padding-top: 3mm;
                             border-top: 1px solid #8B4513;
                         }
+                        
                         .signature-box {
+                            display: inline-block;
                             text-align: center;
-                            width: 100%;
                         }
+                        
                         .signature-line {
                             border-top: 1px solid #000;
-                            width: 60%;
-                            margin: 8mm auto 2mm;
+                            width: 50mm;
+                            margin: 6mm auto 2mm;
                         }
+                        
                         .gold-seal {
                             position: absolute;
-                            bottom: 15mm;
+                            bottom: 12mm;
                             left: 50%;
                             transform: translateX(-50%);
-                            width: 20mm;
-                            height: 20mm;
+                            width: 15mm;
+                            height: 15mm;
                             background: rgba(255, 215, 0, 0.5);
                             border-radius: 50%;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            font-size: 12pt;
+                            font-size: 10pt;
                             color: #8B4513;
                             border: 1px solid #8B4513;
                         }
-                        @media print {
-                            body { 
-                                margin: 0; 
-                                padding: 0;
-                                border: 10mm solid #DAA520;
-                                -webkit-print-color-adjust: exact;
-                                print-color-adjust: exact;
+                        
+                        .certificate-footer {
+                            font-size: 7pt;
+                            color: #666;
+                            text-align: center;
+                            margin-top: 10mm;
+                            border-top: 1px dashed #ccc;
+                            padding-top: 2mm;
+                        }
+                        
+                        .no-print {
+                            display: none;
+                        }
+                        
+                        @media screen and (max-width: 768px) {
+                            body {
+                                padding: 5mm;
                             }
-                            .gold-border {
-                                page-break-inside: avoid;
+                            .certificate-container {
+                                padding: 5mm;
+                                border-width: 2mm;
                             }
+                            .student-details {
+                                grid-template-columns: 1fr;
+                            }
+                        }
+                        
+                        .print-instructions {
+                            text-align: center;
+                            padding: 10mm;
+                            font-family: Arial, sans-serif;
+                            background: #f0f0f0;
+                            margin: 10mm auto;
+                            border-radius: 5mm;
+                            max-width: 600px;
+                        }
+                        
+                        .print-button {
+                            display: block;
+                            margin: 10mm auto;
+                            padding: 10mm 20mm;
+                            background: #4CAF50;
+                            color: white;
+                            border: none;
+                            border-radius: 5mm;
+                            font-size: 16pt;
+                            cursor: pointer;
+                        }
+                        
+                        .print-button:hover {
+                            background: #45a049;
                         }
                     </style>
                 </head>
                 <body>
+                    <div class="print-instructions no-print">
+                        <h2>Print Your Certificate</h2>
+                        <p>Your certificate is ready to print. Please make sure:</p>
+                        <ol style="text-align: left; max-width: 400px; margin: 0 auto;">
+                            <li>Paper size is set to A4</li>
+                            <li>Orientation is set to Portrait</li>
+                            <li>Margins are set to "Minimum" or "None"</li>
+                            <li>Scale is set to 100%</li>
+                            <li>Enable "Background graphics" in print settings</li>
+                        </ol>
+                        <button class="print-button" onclick="window.print()">
+                            🖨️ Print Certificate
+                        </button>
+                        <p style="color: #666; margin-top: 10mm;">
+                            After printing, you can close this window.
+                        </p>
+                    </div>
+                    
                     <div class="certificate-container">
                         <div class="gold-border">
-                            <div>
-                                <div class="print-logo">
-                                    <img src="${CLUB_LOGO_URL}" alt="Lions Karate Club Logo">
-                                </div>
-                                <div class="club-name">LIONS KARATE CLUB PUNE</div>
-                                <div style="color: #A0522D; font-size: 10pt; margin-bottom: 8mm;">Excellence in Martial Arts Since 2023</div>
-                                
-                                <div class="certificate-title">CERTIFICATE OF EXCELLENCE</div>
-                                
-                                <div class="awarded-text">This certificate is proudly awarded to</div>
-                                
-                                <div class="student-name">${currentStudent.name}</div>
-                                
-                                <div class="achievement-text">for outstanding performance in the</div>
-                                
-                                <div class="belt-exam">${currentStudent.appearingBelt.toUpperCase()} BELT EXAMINATION</div>
-                                
-                                <div class="gold-result-box">
-                                    <div class="result-text">RESULT: PASS</div>
-                                    <div class="result-text">GRADE: A+</div>
-                                </div>
-                                
-                                <div class="student-details">
-                                    <div>
-                                        <div class="detail-item"><strong>Date of Birth:</strong> ${formatDateForPDF(currentStudent.dob)}</div>
-                                        <div class="detail-item"><strong>Parent Name:</strong> ${currentStudent.parentName}</div>
-                                        <div class="detail-item"><strong>Mobile:</strong> ${formatMobileDisplay(currentStudent.parentMobile)}</div>
-                                        <div class="detail-item"><strong>Branch:</strong> ${currentStudent.branch}</div>
+                            <div class="print-logo">
+                                <img src="${CLUB_LOGO_URL}" alt="Lions Karate Club Logo">
+                            </div>
+                            <div class="club-name">LIONS KARATE CLUB PUNE</div>
+                            <div class="club-subtitle">Excellence in Martial Arts Since 2023</div>
+                            
+                            <div class="certificate-title">CERTIFICATE OF EXCELLENCE</div>
+                            
+                            <div class="awarded-text">This certificate is proudly awarded to</div>
+                            
+                            <div class="student-name">${currentStudent.name}</div>
+                            
+                            <div class="achievement-text">for outstanding performance in the</div>
+                            
+                            <div class="belt-exam">${currentStudent.appearingBelt.toUpperCase()} BELT EXAMINATION</div>
+                            
+                            <div class="gold-result-box">
+                                <div class="result-text">RESULT: PASS</div>
+                                <div class="result-text">GRADE: A+</div>
+                            </div>
+                            
+                            <div class="student-details">
+                                <div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Date of Birth:</span><br>
+                                        <span class="detail-value">${formatDateForPDF(currentStudent.dob)}</span>
                                     </div>
-                                    <div>
-                                        <div class="detail-item"><strong>Current Belt:</strong> ${currentStudent.currentBelt}</div>
-                                        <div class="detail-item"><strong>Appearing Belt:</strong> ${currentStudent.appearingBelt}</div>
-                                        <div class="detail-item"><strong>Gender:</strong> ${currentStudent.gender}</div>
-                                        <div class="detail-item"><strong>Fees Status:</strong> ${currentStudent.feesStatus || 'Paid'}</div>
-                                        <div class="detail-item"><strong>Exam Date:</strong> January 26, 2026</div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Parent Name:</span><br>
+                                        <span class="detail-value">${currentStudent.parentName}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Mobile:</span><br>
+                                        <span class="detail-value">${formatMobileDisplay(currentStudent.parentMobile)}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Branch:</span><br>
+                                        <span class="detail-value">${currentStudent.branch}</span>
                                     </div>
                                 </div>
-                                
-                                <div style="color: #A0522D; font-size: 10pt; margin: 5mm 0;">
-                                    Examination Date: January 26, 2026 | Certificate ID: LKC-${Date.now().toString().slice(-8)}
+                                <div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Current Belt:</span><br>
+                                        <span class="detail-value">${currentStudent.currentBelt}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Appearing Belt:</span><br>
+                                        <span class="detail-value">${currentStudent.appearingBelt}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Gender:</span><br>
+                                        <span class="detail-value">${currentStudent.gender}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Fees Status:</span><br>
+                                        <span class="detail-value">${currentStudent.feesStatus || 'Paid'}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Exam Date:</span><br>
+                                        <span class="detail-value">January 26, 2026</span>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div>
-                                <div class="signature">
-                                    <div class="signature-box">
-                                        <div class="signature-line"></div>
-                                        <strong>LIONS KARATE CLUB PUNE</strong><br>
-                                        Official Certificate
-                                    </div>
+                            <div class="signature">
+                                <div class="signature-box">
+                                    <div class="signature-line"></div>
+                                    <strong>LIONS KARATE CLUB PUNE</strong><br>
+                                    <span style="font-size: 9pt; color: #666;">Official Certificate</span>
                                 </div>
-                                
-                                <div class="gold-seal">
-                                    OFFICIAL<br>SEAL<br>✓
-                                </div>
+                            </div>
+                            
+                            <div class="gold-seal">
+                                ✓
+                            </div>
+                            
+                            <div class="certificate-footer">
+                                Certificate ID: LKC-${Date.now().toString().slice(-8)} | Generated: ${currentDate} | Page 1 of 1
                             </div>
                         </div>
                     </div>
                     
                     <script>
-                        window.onload = function() {
-                            window.print();
+                        // Auto-print after 1 second on desktop, but show instructions on mobile
+                        if (window.innerWidth > 768) {
+                            setTimeout(function() {
+                                window.print();
+                            }, 1000);
+                        }
+                        
+                        // Close window after printing
+                        window.onafterprint = function() {
                             setTimeout(function() {
                                 window.close();
-                            }, 100);
+                            }, 1000);
                         };
+                        
+                        // Also trigger print when button is clicked
+                        document.querySelector('.print-button').addEventListener('click', function() {
+                            window.print();
+                        });
                     <\/script>
                 </body>
                 </html>
             `;
             
-            const printWindow = window.open('', '_blank');
             printWindow.document.write(printContent);
             printWindow.document.close();
+            
+            // Focus the window
+            printWindow.focus();
         }
         
         function newSearch() {
